@@ -61,8 +61,38 @@ MENU
   cursor: pointer;
 }
 
+.menu-item-account {
+  display: flex;
+}
+
+.menu-item-account > div:nth-child(1) {
+  width: 120px;
+}
+
+.menu-item-account:hover > div:nth-child(2) {
+  display: block;
+}
+
+.menu-item-logout {
+  display: none;
+  position: relative;
+  right: 0;
+  top: 0;
+  width: 40px;
+
+  padding: 10px 0px 10px 0px;
+  cursor: pointer;
+
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
 .menu-item:hover {
   background-color: rgba(255, 255, 255, 0.15);
+}
+
+.menu-item-logout:hover {
+  background-color: rgba(255, 0, 0, 0.3);
 }
 
 /*

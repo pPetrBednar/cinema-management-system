@@ -1,0 +1,1 @@
+<footer>Responsive website prototype &copy;Petr Bednář</footer>
