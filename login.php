@@ -2,6 +2,7 @@
 session_start();
 $_SESSION['page'] = "login";
 
+define('LOADER', true);
 include_once 'includes/db.inc.php';
 include_once 'includes/dbm.inc.php';
 include_once 'includes/user.inc.php';
@@ -47,5 +48,4 @@ include_once 'includes/user.inc.php';
   }
   ?>
 </body>
-
 </html>

@@ -2,6 +2,7 @@
 session_start();
 $_SESSION['page'] = "index";
 
+define('LOADER', true);
 include_once 'includes/user.inc.php';
 ?>
 <!DOCTYPE html>

@@ -1,5 +1,11 @@
 <?php
 
+class NO_DATA_FOUND_EXCEPTION extends Exception {
+    public function __construct() {
+        $this->message = "User not found";
+    }
+}
+
 class USER_NOT_FOUND_EXCEPTION extends Exception {
     public function __construct() {
         $this->message = "User not found";
@@ -18,6 +24,12 @@ class REGISTRATION_FAILED_EXCEPTION extends Exception {
     }
 }
 
+class PASSWORDS_MISMATCH_EXCEPTION extends Exception {
+    public function __construct() {
+        $this->message = "Passwords mismatch";
+    }
+}
+
 final class Dbm extends Db {
 
     private $bCryptOptions = [
@@ -32,7 +44,7 @@ final class Dbm extends Db {
         if ($stmt->rowCount()) {
             $rec = $stmt->fetch();
             if (password_verify($password, $rec["password"])) {
-                $_SESSION["user"] = serialize(new User($rec["email"], $rec["first_name"], $rec["last_name"], $rec["registered"]));
+                $_SESSION["user"] = serialize(new User($rec["email"], $rec["first_name"], $rec["last_name"], $rec["permission"], $rec["registered"]));
             } else {
                 throw new WRONG_PASSWORD_EXCEPTION;
             }
@@ -46,12 +58,33 @@ final class Dbm extends Db {
         session_destroy();
     }
 
-    public function register($email, $password) {
+    public function register($email, $password, $passwordAgain) {
+
+        if ($password != $passwordAgain) {
+            throw new PASSWORDS_MISMATCH_EXCEPTION;
+        }
+
         $stmt = $this->connect()->prepare("INSERT INTO users (id, email, password) VALUES (NULL, ?, ?)");
         $stmt->execute([$email, password_hash($password, PASSWORD_BCRYPT, $this->bCryptOptions)]);
 
         if (!$stmt->rowCount()) {
             throw new REGISTRATION_FAILED_EXCEPTION;
         }
+    }
+
+    public function getAllUsers() {
+
+        $stmt = $this->connect()->prepare("SELECT email, first_name, last_name, permission, registered FROM users ORDER BY registered ASC");
+        $stmt->execute();
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new User($row['email'], $row['first_name'], $row['last_name'], $row['permission'], $row['registered']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
     }
 }

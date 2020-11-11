@@ -1,11 +1,26 @@
+<?php
+defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
+?>
 <div class="menu">
-    <div class="menu-title" onclick="window.open('index.php', '_self')">ProtoT</div>
+    <div class="menu-title" onclick="window.open('index.php', '_self')">Cinematic</div>
     <div class="menu-item" onclick="window.open('index.php', '_self')">
         Gallery
     </div>
     <div class="menu-item">-</div>
     <div class="menu-item">-</div>
     <div class="menu-item">-</div>
+    <?php
+    if (!empty($_SESSION['user'])) {
+        $user = unserialize($_SESSION['user']);
+        if ($user->permission == 0) {
+    ?>
+            <div class="menu-item" onclick="window.open('users.admin.php', '_self')">
+                Users
+            </div>
+    <?php
+        }
+    }
+    ?>
     <?php
     if (empty($_SESSION['user'])) {
     ?>

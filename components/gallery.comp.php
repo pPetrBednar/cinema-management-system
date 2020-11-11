@@ -1,3 +1,6 @@
+<?php
+defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
+?>
 <div class="container" id="gallery">
     <div class="gallery-item" onclick="window.open('preview.html', '_self')">
         <img class="gallery-img" src="img/placeholder-image.png" />
