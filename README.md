@@ -1,2 +1,2 @@
-# cinema-management-system
-Systém pro správu kinosálů, jejich programů a s nimi spojeným rezervačním systémem vstupních lístků.
+# login-system
+Webová stránka s přihlašováním, registrací, úpravami informací a administrátorský režim.
