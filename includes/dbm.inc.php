@@ -87,4 +87,19 @@ final class Dbm extends Db {
 
         throw new NO_DATA_FOUND_EXCEPTION;
     }
+
+    public function editUserAdmin($email, $firstName, $lastName, $permission) {
+        $stmt = $this->connect()->prepare("UPDATE users SET email = ?, first_name = ?, last_name = ?, permission = ? WHERE email = ?");
+        $stmt->execute([$email, $firstName, $lastName, $permission, $email]);
+    }
+
+    public function editUser($email, $firstName, $lastName) {
+        $stmt = $this->connect()->prepare("UPDATE users SET first_name = ?, last_name = ? WHERE email = ?");
+        $stmt->execute([$firstName, $lastName, $email]);
+    }
+
+    public function deleteUser($email) {
+        $stmt = $this->connect()->prepare("DELETE FROM users WHERE email=?");
+        $stmt->execute([$email]);
+    }
 }

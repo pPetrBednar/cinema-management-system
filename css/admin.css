@@ -12,6 +12,20 @@
   margin-left: 200px;
 }
 
+.users-admin-container input,
+.users-admin-container button {
+  padding: 2px 4px;
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f3f3f3;
+  width: 90%;
+}
+
+.users-admin-container button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 @media only screen and (max-width: 700px) {
   .users-admin-container {
     width: 100%;
@@ -41,5 +55,5 @@
 }
 
 .users-admin-container tr:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+  background-color: rgba(0, 0, 0, 0.1);
+}

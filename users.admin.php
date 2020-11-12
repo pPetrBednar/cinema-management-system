@@ -20,9 +20,9 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-  <title>Responsive website</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="css/style.css" />
+  <?php
+  include 'components/head.comp.php';
+  ?>
   <link rel="stylesheet" href="css/admin.css" />
 </head>
 
@@ -45,26 +45,28 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
       $dbm = new Dbm;
       $users = $dbm->getAllUsers();
 
-      foreach ($users as $user) {
+      foreach ($users as $res) {
+        if ($user->email == $res->email) {
+          continue;
+        }
       ?>
         <tr>
-          <td><?= $user->email; ?></td>
-          <td><?= $user->firstname; ?></td>
-          <td><?= $user->lastname; ?></td>
-          <td><?= $user->permission; ?></td>
-          <td><?= $user->registered; ?></td>
-          <td>
-            <form action="editor.php" method="post">
+          <form action="edit.admin.php" method="post">
+            <td><input type="text" name="email" value="<?= $res->email; ?>"></td>
+            <td><input type="text" name="firstName" value="<?= $res->firstName; ?>"></td>
+            <td><input type="text" name="lastName" value="<?= $res->lastName; ?>"></td>
+            <td><input type="text" name="permission" value="<?= $res->permission; ?>"></td>
+            <td><?= $res->registered; ?></td>
+            <td>
               <input type="text" name="action" value="editUserAdmin" style="display: none;">
-              <input type="text" name="email" value="<?= $user->email; ?>" style="display: none;">
-              <input type="submit" value="Edit">
-            </form>
-          </td>
+              <button type="submit">Edit</button>
+            </td>
+          </form>
           <td>
-            <form action="editor.php" method="post">
+            <form action="edit.admin.php" method="post">
               <input type="text" name="action" value="deleteUser" style="display: none;">
-              <input type="text" name="email" value="<?= $user->email; ?>" style="display: none;">
-              <input type="submit" value="Delete">
+              <input type="text" name="email" value="<?= $res->email; ?>" style="display: none;">
+              <button type="submit">Delete</button>
             </form>
           </td>
         </tr>

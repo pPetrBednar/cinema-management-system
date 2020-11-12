@@ -35,6 +35,16 @@ body {
   display: none;
 }
 
+input,
+button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+
+  /*font-family: "Courier New", Courier, monospace;*/
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 /*
 
 MENU
@@ -131,12 +141,23 @@ footer {
   bottom: 0;
   left: 0;
 
-  width: 100%;
-  padding: 10px;
+  width: 200px;
+  padding: 4px 0px;
 
+  font-size: 13px;
   background-color: #232323;
   text-align: center;
   color: #f3f3f3;
+}
+
+@media only screen and (max-width: 700px) {
+  footer {
+    position: initial;
+    width: 100%;
+    height: auto;
+
+    text-align: center;
+  }
 }
 
 /*
@@ -338,6 +359,13 @@ ACCOUNT
   text-align: center;
 }
 
+.account-item input {
+  padding: 2px 4px;
+  font-size: 17px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f3f3f3;
+}
+
 .account-edit {
   display: flex;
   padding: 30px 30px;
@@ -350,16 +378,20 @@ ACCOUNT
   text-align: center;
 }
 
-.account-edit > div > div {
+.account-edit > div div,
+.account-edit > div button {
   width: 70%;
-  padding: 5px 10px;
+  padding: 5px 0px;
   margin: auto;
 
+  font-size: 17px;
+  color: #f3f3f3;
   background-color: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
 
-.account-edit > div > div:hover {
+.account-edit > div div:hover,
+.account-edit > div button:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 

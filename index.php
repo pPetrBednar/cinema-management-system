@@ -9,9 +9,9 @@ include_once 'includes/user.inc.php';
 <html lang="en">
 
 <head>
-  <title>Responsive website</title>
-  <meta charset="utf-8" />
-  <link rel="stylesheet" href="css/style.css" />
+  <?php
+  include 'components/head.comp.php';
+  ?>
 </head>
 
 <body>
