@@ -3,23 +3,23 @@ session_start();
 $_SESSION['page'] = "index";
 
 define('LOADER', true);
-include_once 'includes/user.inc.php';
+include_once 'includes/classes/User.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <?php
-  include 'components/head.comp.php';
-  ?>
-</head>
+    <head>
+        <?php
+        include 'includes/components/head.php';
+        ?>
+    </head>
 
-<body>
-  <?php
-  include 'components/menu.comp.php';
-  include 'components/gallery.comp.php';
-  include 'components/footer.comp.php';
-  ?>
-</body>
+    <body>
+        <?php
+        include 'includes/components/menu.php';
+        include 'includes/components/gallery.php';
+        include 'includes/components/footer.php';
+        ?>
+    </body>
 
 </html>

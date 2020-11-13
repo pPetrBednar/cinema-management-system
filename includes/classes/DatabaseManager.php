@@ -1,36 +1,46 @@
 <?php
 
 class NO_DATA_FOUND_EXCEPTION extends Exception {
+
     public function __construct() {
-        $this->message = "User not found";
+        parent::__construct("User not found");
     }
+
 }
 
 class USER_NOT_FOUND_EXCEPTION extends Exception {
+
     public function __construct() {
-        $this->message = "User not found";
+        parent::__construct("User not found");
     }
+
 }
 
 class WRONG_PASSWORD_EXCEPTION extends Exception {
+
     public function __construct() {
-        $this->message = "Wrong password";
+        parent::__construct("Wrong password");
     }
+
 }
 
 class REGISTRATION_FAILED_EXCEPTION extends Exception {
+
     public function __construct() {
-        $this->message = "Registration failed";
+        parent::__construct("Registration failed");
     }
+
 }
 
 class PASSWORDS_MISMATCH_EXCEPTION extends Exception {
+
     public function __construct() {
-        $this->message = "Passwords mismatch";
+        parent::__construct("Passwords mismatch");
     }
+
 }
 
-final class Dbm extends Db {
+final class DatabaseManager extends Database {
 
     private $bCryptOptions = [
         'cost' => 10
@@ -102,4 +112,5 @@ final class Dbm extends Db {
         $stmt = $this->connect()->prepare("DELETE FROM users WHERE email=?");
         $stmt->execute([$email]);
     }
+
 }

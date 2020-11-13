@@ -1,32 +1,33 @@
 <?php
+
 session_start();
 
 if ($_SESSION['page'] != "users.admin" && $_SESSION['page'] != "account") {
     die("Ah, i see what you did there. No direct access next time!");
 }
 
-include_once 'includes/db.inc.php';
-include_once 'includes/dbm.inc.php';
-include_once 'includes/user.inc.php';
+include_once 'includes/classes/Database.php';
+include_once 'includes/classes/DatabaseManager.php';
+include_once 'includes/classes/User.php';
 
-if (isset($_POST['action']) && !empty($_POST['action'])) {
-    $dbm = new Dbm;
+if (filter_input(INPUT_POST, 'action') && !empty(filter_input(INPUT_POST, 'action'))) {
+    $dbm = new DatabaseManager;
     $user = unserialize($_SESSION['user']);
-    switch ($_POST['action']) {
+    switch (filter_input(INPUT_POST, 'action')) {
         case "editUserAdmin":
-            if ($user->permission == 0 && $_POST['email'] != $user->email) {
-                $dbm->editUserAdmin($_POST['email'], $_POST['firstName'], $_POST['lastName'], $_POST['permission']);
+            if ($user->permission == 0 && filter_input(INPUT_POST, 'email') != $user->email) {
+                $dbm->editUserAdmin(filter_input(INPUT_POST, 'email'), filter_input(INPUT_POST, 'firstName'), filter_input(INPUT_POST, 'lastName'), filter_input(INPUT_POST, 'permission'));
             }
             break;
         case "deleteUser":
-            if ($user->permission == 0 && $_POST['email'] != $user->email) {
-                $dbm->deleteUser($_POST['email']);
+            if ($user->permission == 0 && filter_input(INPUT_POST, 'email') != $user->email) {
+                $dbm->deleteUser(filter_input(INPUT_POST, 'email'));
             }
             break;
         case "editUser":
-            $dbm->editUser($user->email, $_POST['firstName'], $_POST['lastName']);
-            $user->firstName = $_POST['firstName'];
-            $user->lastName = $_POST['lastName'];
+            $dbm->editUser($user->email, filter_input(INPUT_POST, 'firstName'), filter_input(INPUT_POST, 'lastName'));
+            $user->firstName = filter_input(INPUT_POST, 'firstName');
+            $user->lastName = filter_input(INPUT_POST, 'lastName');
             $_SESSION['user'] = serialize($user);
             break;
     }

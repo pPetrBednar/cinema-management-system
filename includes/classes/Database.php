@@ -1,6 +1,6 @@
 <?php
 
-class Db {
+class Database {
     private $hostname;
     private $username;
     private $password;
