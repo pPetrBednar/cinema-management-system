@@ -1,33 +1,119 @@
 // Users
-CREATE TABLE `cinema-management-db`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `password` CHAR(60) BINARY NOT NULL , `first_name` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL , `last_name` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL , `permission` TINYINT UNSIGNED NOT NULL DEFAULT '100' , `registered` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`), UNIQUE `uid` (`email`)) ENGINE = InnoDB;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` char(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `first_name` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `last_name` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `permission` tinyint(3) UNSIGNED NOT NULL DEFAULT 100,
+  `registered` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Cinemas
-CREATE TABLE `cinema-management-db`.`cinemas` ( `id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `city` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , `address` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinemas` (
+  `id` int(11) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `city` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Movies
-CREATE TABLE `cinema-management-db`.`movies` ( `id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `year` INT NOT NULL , `duration` INT NOT NULL , `description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `movies` (
+  `id` int(11) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `year` int(11) NOT NULL,
+  `duration` int(11) NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cover_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Halls
-CREATE TABLE `cinema-management-db`.`halls` ( `id` INT NOT NULL AUTO_INCREMENT , `uid` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `type` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , `cinema_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `halls` (
+  `id` int(11) NOT NULL,
+  `uid` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cinema_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Seats
-CREATE TABLE `cinema-management-db`.`seats` ( `id` INT NOT NULL AUTO_INCREMENT , `pos_x` INT NOT NULL , `pos_y` INT NOT NULL , `type` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , `hall_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `seats` (
+  `id` int(11) NOT NULL,
+  `pos_x` int(11) NOT NULL,
+  `pos_y` int(11) NOT NULL,
+  `type` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hall_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Reserved seats
-CREATE TABLE `cinema-management-db`.`reserved_seats` ( `id` INT NOT NULL AUTO_INCREMENT , `reservation_id` INT NOT NULL , `seat_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `reserved_seats` (
+  `id` int(11) NOT NULL,
+  `reservation_id` int(11) NOT NULL,
+  `seat_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Reservations
-CREATE TABLE `cinema-management-db`.`reservations` ( `id` INT NOT NULL AUTO_INCREMENT , `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `user_id` INT NOT NULL , `program_entry_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `reservations` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `program_entry_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// Completed Orders
+CREATE TABLE `completed_orders` (
+  `id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `completed` datetime NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// Completed Reservations
+CREATE TABLE `completed_reservations` (
+  `id` int(11) NOT NULL,
+  `tickets` tinyint(3) UNSIGNED NOT NULL,
+  `cost` int(11) NOT NULL,
+  `completed_order_id` int(11) NOT NULL,
+  `program_entry_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// Orders
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `created` datetime NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 // Program entries
+CREATE TABLE `program_entries` (
+  `id` int(11) NOT NULL,
+  `start` datetime NOT NULL,
+  `movie_id` int(11) NOT NULL,
+  `hall_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+// All tables
+CREATE TABLE `cinema-management-db`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `password` CHAR(60) BINARY NOT NULL , `first_name` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL , `last_name` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL , `permission` TINYINT UNSIGNED NOT NULL DEFAULT '100' , `registered` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`), UNIQUE `uid` (`email`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`cinemas` ( `id` int(11) NOT NULL, `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL, `city` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL, `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL, `cover_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `cinema-management-db`.`movies` ( `id` int(11) NOT NULL, `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL, `year` int(11) NOT NULL, `duration` int(11) NOT NULL, `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL, `cover_url` text COLLATE utf8mb4_unicode_ci DEFAULT NULL ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `cinema-management-db`.`halls` ( `id` INT NOT NULL AUTO_INCREMENT , `uid` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL , `type` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , `cinema_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`seats` ( `id` INT NOT NULL AUTO_INCREMENT , `pos_x` INT NOT NULL , `pos_y` INT NOT NULL , `type` VARCHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL , `hall_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`reserved_seats` ( `id` INT NOT NULL AUTO_INCREMENT , `reservation_id` INT NOT NULL , `seat_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`reservations` ( `id` INT NOT NULL AUTO_INCREMENT , `order_id` INT NOT NULL , `program_entry_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`completed_reservations` ( `id` INT NOT NULL AUTO_INCREMENT , `tickets` TINYINT UNSIGNED NOT NULL , `cost` INT NOT NULL , `completed_order_id` INT NOT NULL , `program_entry_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`orders` ( `id` INT NOT NULL AUTO_INCREMENT , `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `user_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `cinema-management-db`.`completed_orders` ( `id` INT NOT NULL AUTO_INCREMENT , `created` DATETIME NOT NULL , `completed` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `user_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 CREATE TABLE `cinema-management-db`.`program_entries` ( `id` INT NOT NULL AUTO_INCREMENT , `start` DATETIME NOT NULL , `movie_id` INT NOT NULL , `hall_id` INT NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
 // Keys
 ALTER TABLE `cinema-management-db`.`halls` ADD FOREIGN KEY (`cinema_id`) REFERENCES `cinema-management-db`.`cinemas` (`id`);
 ALTER TABLE `cinema-management-db`.`seats` ADD FOREIGN KEY (`hall_id`) REFERENCES `cinema-management-db`.`halls` (`id`);
-ALTER TABLE `cinema-management-db`.`reservations` ADD FOREIGN KEY (`user_id`) REFERENCES `cinema-management-db`.`users` (`id`);
-ALTER TABLE `cinema-management-db`.`reservations` ADD FOREIGN KEY (`program_entry_id`) REFERENCES `cinema-management-db`.`program_entries` (`id`);
 ALTER TABLE `cinema-management-db`.`reserved_seats` ADD FOREIGN KEY (`reservation_id`) REFERENCES `cinema-management-db`.`reservations` (`id`);
 ALTER TABLE `cinema-management-db`.`reserved_seats` ADD FOREIGN KEY (`seat_id`) REFERENCES `cinema-management-db`.`seats` (`id`);
 ALTER TABLE `cinema-management-db`.`program_entries` ADD FOREIGN KEY (`movie_id`) REFERENCES `cinema-management-db`.`movies` (`id`);
 ALTER TABLE `cinema-management-db`.`program_entries` ADD FOREIGN KEY (`hall_id`) REFERENCES `cinema-management-db`.`halls` (`id`);
+ALTER TABLE `cinema-management-db`.`reservations` ADD FOREIGN KEY (`order_id`) REFERENCES `cinema-management-db`.`orders` (`id`);
+ALTER TABLE `cinema-management-db`.`reservations` ADD FOREIGN KEY (`program_entry_id`) REFERENCES `cinema-management-db`.`program_entries` (`id`);
+ALTER TABLE `cinema-management-db`.`completed_reservations` ADD FOREIGN KEY (`program_entry_id`) REFERENCES `cinema-management-db`.`program_entries` (`id`);
+ALTER TABLE `cinema-management-db`.`completed_reservations` ADD FOREIGN KEY (`completed_order_id`) REFERENCES `cinema-management-db`.`completed_orders` (`id`);
+ALTER TABLE `cinema-management-db`.`orders` ADD FOREIGN KEY (`user_id`) REFERENCES `cinema-management-db`.`users` (`id`);
+ALTER TABLE `cinema-management-db`.`completed_orders` ADD FOREIGN KEY (`user_id`) REFERENCES `cinema-management-db`.`users` (`id`);

@@ -8,6 +8,14 @@ class NO_DATA_FOUND_EXCEPTION extends Exception {
 
 }
 
+class NO_DATA_ADDED_EXCEPTION extends Exception {
+
+    public function __construct() {
+        parent::__construct("User not found");
+    }
+
+}
+
 class USER_NOT_FOUND_EXCEPTION extends Exception {
 
     public function __construct() {
@@ -111,6 +119,96 @@ final class DatabaseManager extends Database {
     public function deleteUser($email) {
         $stmt = $this->connect()->prepare("DELETE FROM users WHERE email=?");
         $stmt->execute([$email]);
+    }
+
+    public function getAllMovies() {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM movies ORDER BY title ASC");
+        $stmt->execute();
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Movie($row['id'], $row['title'], $row['year'], $row['duration'], $row['description'], $row['cover_url']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function addMovie($title, $year, $duration, $description, $coverUrl) {
+
+        $stmt = $this->connect()->prepare("INSERT INTO movies (id, title, year, duration, description, cover_url) VALUES (NULL, ?, ?, ?, ?, ?)");
+        $stmt->execute([$title, $year, $duration, $description, $coverUrl]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function editMovie($id, $title, $year, $duration, $description, $coverUrl) {
+        $stmt = $this->connect()->prepare("UPDATE movies SET title = ?, year = ?, duration = ?, description = ?, cover_url = ? WHERE id = ?");
+        $stmt->execute([$title, $year, $duration, $description, $coverUrl, $id]);
+    }
+
+    public function getMovie($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM movies WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new Movie($row['id'], $row['title'], $row['year'], $row['duration'], $row['description'], $row['cover_url']);
+            }
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getAllCinemas() {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM cinemas ORDER BY title ASC");
+        $stmt->execute();
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Cinema($row['id'], $row['title'], $row['city'], $row['address'], $row['cover_url']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function addCinema($title, $city, $address, $coverUrl) {
+
+        $stmt = $this->connect()->prepare("INSERT INTO cinemas (id, title, city, address, cover_url) VALUES (NULL, ?, ?, ?, ?)");
+        $stmt->execute([$title, $city, $address, $coverUrl]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function editCinema($id, $title, $city, $address, $coverUrl) {
+        $stmt = $this->connect()->prepare("UPDATE cinemas SET title = ?, city = ?, address = ?, cover_url = ? WHERE id = ?");
+        $stmt->execute([$title, $city, $address, $coverUrl, $id]);
+    }
+
+    public function getCinema($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM cinemas WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new Cinema($row['id'], $row['title'], $row['city'], $row['address'], $row['cover_url']);
+            }
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
     }
 
 }
