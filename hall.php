@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_SESSION['page'] = "movies";
+$_SESSION['page'] = "hall";
 
 define('LOADER', true);
 include_once 'includes/classes/User.php';
@@ -18,9 +18,10 @@ include_once 'includes/classes/User.php';
         <?php
         include 'includes/components/menu.php';
         include 'includes/components/cart.php';
-        include 'includes/components/movies.php';
+        include 'includes/components/hall.php';
         include 'includes/components/footer.php';
         ?>
     </body>
 </html>
+
 

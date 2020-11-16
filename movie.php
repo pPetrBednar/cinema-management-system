@@ -17,6 +17,7 @@ include_once 'includes/classes/User.php';
     <body>
         <?php
         include 'includes/components/menu.php';
+        include 'includes/components/cart.php';
         include 'includes/components/movie.php';
         include 'includes/components/footer.php';
         ?>

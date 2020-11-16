@@ -5,6 +5,9 @@ include_once 'includes/classes/Database.php';
 include_once 'includes/classes/DatabaseManager.php';
 include_once 'includes/classes/User.php';
 include_once 'includes/classes/Cinema.php';
+include_once 'includes/classes/Movie.php';
+include_once 'includes/classes/Hall.php';
+include_once 'includes/classes/ProgramEntry.php';
 
 $dbm = new DatabaseManager;
 $id = filter_input(INPUT_GET, 'id');
@@ -29,8 +32,11 @@ if ($cinema != null) {
             </div>
             <div>
                 <div><?= $cinema->title; ?></div>
-                <div><span>City:</span> <?= $cinema->city; ?></div>
-                <div><span>Address:</span> <?= $cinema->address; ?></div>
+                <div><span>City:</span><br><?= $cinema->city; ?></div>
+                <div><span>Address:</span><br><?= $cinema->address; ?></div>
+                <div onclick="window.open('halls.php?cinema=<?= $cinema->id; ?>', '_self')">
+                    Cinema halls
+                </div>
             </div>
         </div>
         <div class="cinema-program">
@@ -39,18 +45,52 @@ if ($cinema != null) {
             </div>
             <table>
                 <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Movie
+                    </th>
                     <?php
                     for ($i = 0; $i < 24; $i++) {
                         ?>
-                        <th><?= $i . ":00"; ?></th>
+                        <th></th>
                         <?php
                     }
                     ?>
                 </tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
-                <tr></tr>
+                <?php
+                try {
+                    $programEntries = $dbm->getProgramEntriesOfCinema($id);
+                } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                    $programEntries = null;
+                }
+
+                if ($programEntries != null) {
+                    foreach ($programEntries as $programEntry) {
+                        $date = DateTime::createFromFormat("Y-m-d H:i:s", $programEntry->start);
+                        ?>
+                        <tr onclick="window.open('reservation.php?programEntry=<?= $programEntry->id; ?>', '_self')">
+                            <td><?= $date->format("d. m. Y"); ?></td>
+                            <td><?= $programEntry->movie->title; ?></td>
+                            <?php
+                            for ($i = 0; $i < 24; $i++) {
+                                if ($date->format('H') == $i) {
+                                    ?>
+                                    <td><?= $date->format('H:i'); ?></td>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <td></td>
+                                    <?php
+                                }
+                            }
+                        }
+                        ?>
+                    </tr>
+                    <?php
+                }
+                ?>
             </table>
         </div>
     </div>
@@ -80,6 +120,63 @@ if (!empty($_SESSION['user'])) {
                     <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
                     <br />
                     <input type="submit" value="Edit" />
+                </div>
+            </form>
+        </div>
+        <?php
+    }
+
+    if ($user->permission == 0 || $user->permission == 10) {
+        ?>
+        <div class="cinema-add-program" onclick="openDialogProgram();">
+            Add program entry
+        </div>
+        <div class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
+            <form action="./actions/addProgramEntry.php" method="post">
+                <div class="cinema-add-program-dialog-box">
+                    <div onclick="closeDialogProgram();">x</div>
+                    <span>Add program entry</span>
+                    <br />
+                    <input type="datetime-local" name="start">
+                    <br />
+                    <select name="movies">
+                        <?php
+                        try {
+                            $movies = $dbm->getAllMovies();
+                        } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                            $movies = null;
+                        }
+
+                        if ($movies != null) {
+                            foreach ($movies as $movie) {
+                                ?>
+                                <option value="<?= $movie->id; ?>"><?= $movie->title . " (" . $movie->year . ")" ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                    <br />
+                    <select name="halls">
+                        <?php
+                        try {
+                            $halls = $dbm->getHallsOfCinema($cinema->id);
+                        } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                            $halls = null;
+                        }
+
+                        if ($halls != null) {
+                            foreach ($halls as $hall) {
+                                ?>
+                                <option value="<?= $hall->id; ?>"><?= $hall->uid . " (" . $hall->type . ")" ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+                    </select>
+                    <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
+                    <br />
+                    <input type="submit" value="Add" />
                 </div>
             </form>
         </div>

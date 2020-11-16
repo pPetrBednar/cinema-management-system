@@ -29,8 +29,8 @@ if ($movie != null) {
             </div>
             <div>
                 <div><?= $movie->title; ?></div>
-                <div><span>Aired:</span> <?= $movie->year; ?></div>
-                <div><span>Duration:</span> <?= $movie->duration; ?><span> minutes</span></div>
+                <div><span>Aired:</span><br><?= $movie->year; ?></div>
+                <div><span>Duration:</span><br><?= $movie->duration; ?><span> minutes</span></div>
                 <div><span>Description:</span><br><?= $movie->description; ?></div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-var dialog = document.getElementById("cinemas-add-dialog");
-var dialogProgram = document.getElementById("cinema-add-program-dialog");
+var dialog = document.getElementById("halls-add-dialog");
+var dialogProgram = document.getElementById("hall-add-seat-dialog");
 
 function openDialog() {
     dialog.style.display = "flex";

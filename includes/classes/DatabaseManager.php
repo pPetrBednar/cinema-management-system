@@ -211,4 +211,151 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
+    public function getHallsOfCinema($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM halls WHERE cinema_id = ? ORDER BY uid ASC");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Hall($row['id'], $row['uid'], $row['type'], $row['cinema_id']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function addHall($uid, $type, $cinemaId) {
+        $stmt = $this->connect()->prepare("INSERT INTO halls (id, uid, type, cinema_id) VALUES (NULL, ?, ?, ?)");
+        $stmt->execute([$uid, $type, $cinemaId]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function getHall($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM halls WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new Hall($row['id'], $row['uid'], $row['type'], $row['cinema_id']);
+            }
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function editHall($id, $uid, $type) {
+        $stmt = $this->connect()->prepare("UPDATE halls SET uid = ?, type = ? WHERE id = ?");
+        $stmt->execute([$uid, $type, $id]);
+    }
+
+    public function addProgramEntry($start, $movieId, $hallId) {
+        $stmt = $this->connect()->prepare("INSERT INTO program_entries (id, start, movie_id, hall_id) VALUES (NULL, ?, ?, ?)");
+        $stmt->execute([$start, $movieId, $hallId]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function getProgramEntriesOfCinema($id) {
+
+        $stmt = $this->connect()->prepare("SELECT `program_entries`.`id`, `start`, `movie_id`, `hall_id`, `uid`, `type`, `title`, `year`, `duration`  FROM `program_entries` INNER JOIN `movies` ON `movie_id` = `movies`.`id` INNER JOIN `halls` ON `hall_id` = `halls`.`id` WHERE `halls`.`cinema_id` = ? AND `start` > CURRENT_TIMESTAMP");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new ProgramEntry($row['id'], $row['start'], new Movie($row['movie_id'], $row['title'], $row['year'], $row['duration'], "", ""), new Hall($row['hall_id'], $row['uid'], $row['type'], $id)));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function addSeat($posX, $posY, $type, $hallId) {
+        $stmt = $this->connect()->prepare("INSERT INTO seats (id, pos_x, pos_y, type, hall_id) VALUES (NULL, ?, ?, ?, ?)");
+        $stmt->execute([$posX, $posY, $type, $hallId]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function deleteSeat($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM seats WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
+    }
+
+    public function getSeatsOfHall($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM seats WHERE hall_id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Seat($row['id'], $row['pos_x'], $row['pos_y'], $row['type'], $id));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getProgramEntryNoData($id) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM program_entries WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new ProgramEntry($row['id'], $row['start'], $row['movie_id'], $row['hall_id']);
+            }
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getProgramEntry($id) {
+
+        $stmt = $this->connect()->prepare("SELECT `program_entries`.`id`, `start`, `movie_id`, `hall_id`, `uid`, `type`, `title`, `year`, `duration` FROM `program_entries` INNER JOIN `movies` ON `movie_id` = `movies`.`id` INNER JOIN `halls` ON `hall_id` = `halls`.`id` WHERE `program_entries`.`id` = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new ProgramEntry($row['id'], $row['start'], new Movie($row['movie_id'], $row['title'], $row['year'], $row['duration'], "", ""), new Hall($row['hall_id'], $row['uid'], $row['type'], $id));
+            }
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getOccupiedSeatsOfProgramEntry($id) {
+
+        $stmt = $this->connect()->prepare("SELECT pos_x, pos_y, type FROM `seats` INNER JOIN `reserved_seats` ON `reserved_seats`.`seat_id` = `seats`.`id` INNER JOIN `reservations` ON `reserved_seats`.`reservation_id` = `reservations`.`id` WHERE `reservations`.`program_entry_id` = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Seat("", $row['pos_x'], $row['pos_y'], $row['type'], ""));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
 }
