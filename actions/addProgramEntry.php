@@ -17,13 +17,14 @@ if (!empty($_SESSION['user'])) {
 }
 
 $start = filter_input(INPUT_POST, 'start');
+$price = filter_input(INPUT_POST, 'price');
 $movieId = filter_input(INPUT_POST, 'movies');
 $hallId = filter_input(INPUT_POST, 'halls');
 
-if ($start && $movieId && $hallId) {
+if ($start && $price && $movieId && $hallId) {
     $dbm = new DatabaseManager;
     try {
-        $dbm->addProgramEntry($start, $movieId, $hallId);
+        $dbm->addProgramEntry($start, $price, $movieId, $hallId);
     } catch (NO_DATA_ADDED_EXCEPTION $e) {
         // handle
     }

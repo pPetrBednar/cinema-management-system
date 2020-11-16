@@ -22,7 +22,7 @@ $duration = filter_input(INPUT_POST, 'duration');
 $description = filter_input(INPUT_POST, 'description');
 $coverUrl = filter_input(INPUT_POST, 'coverUrl');
 
-if ($title && $year && $duration && $description && $coverUrl) {
+if ($title && $year && $duration) {
     $dbm = new DatabaseManager;
     try {
         $dbm->addMovie($title, $year, $duration, $description, $coverUrl);

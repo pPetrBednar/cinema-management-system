@@ -146,6 +146,20 @@ MENU
     background-color: rgba(255, 0, 0, 0.3);
 }
 
+@media only screen and (max-width: 700px) {
+
+    .menu-item-account {
+        position: relative;
+    }
+
+    .menu-item-logout {
+        position: absolute;
+        right: 0;
+        top: 0;
+        display: block;
+    }
+}
+
 /*
 
 /MENU
@@ -1585,6 +1599,8 @@ CART
     width: 80px;
     height: 40px;
     line-height: 40px;
+    box-sizing: border-box;
+    border: 1px solid black;
 }
 
 .cart-box:hover {
@@ -1646,6 +1662,320 @@ CART
 /*
 
 /CART
+
+*/
+
+/*
+
+CHECKOUT
+
+*/
+
+.checkout-container {
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(100% - 200px);
+    height: 100%;
+
+    margin-left: 200px;
+}
+
+
+
+.checkout-box {
+    padding: 20px;
+    border: 1px solid black;
+
+    text-align: center;
+    background-color: #24252A;
+}
+
+@media only screen and (max-width: 700px) {
+    .checkout-container {
+        width: 100%;
+        margin: 20px 0px;
+        height: auto;
+    }
+
+    .checkout-box {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+.checkout-box > div:nth-of-type(1), .checkout-box > div:nth-of-type(3) {
+    font-size: 25px;
+    text-align: left;
+    padding: 20px;
+}
+
+.checkout-box > div:nth-of-type(5) {
+    display: flex;
+    margin-top: 50px;
+}
+
+.checkout-box > div:nth-of-type(5) > div {
+    width: 50%;
+}
+
+.checkout-box > div:nth-of-type(5) > div > div {
+    width: 50%;
+    margin: auto;
+
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 5px;
+    background-color: #3a3c4a;
+    cursor: pointer;
+}
+
+.checkout-box > div:nth-of-type(5) > div > div:hover {
+    background-color: #535566;
+}
+
+.checkout-box table {
+
+}
+
+.checkout-box table th {
+    padding: 20px 0px;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkout-box table td {
+    padding: 10px 0px;
+}
+
+.checkout-box table td span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.checkout-box table td:nth-of-type(1) {
+    padding-right: 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkout-box table td:nth-of-type(2) {
+    padding: 0px 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkout-box table td:nth-of-type(3) {
+    padding: 0px 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkout-box table td:nth-of-type(4) {
+    padding-left: 40px;
+}
+
+.checkout-box > div:nth-of-type(4) {
+    width: 100%;
+}
+
+.checkout-box > div:nth-of-type(4) table {
+    margin: auto;
+}
+
+.checkout-box > div:nth-of-type(4) td:nth-of-type(1) {
+    padding-left: 40px;
+}
+
+.checkout-box > div:nth-of-type(4) td:nth-of-type(2) {
+    border-right: none;
+}
+
+/*
+
+/CHECKOUT
+
+*/
+
+/*
+
+ORDERS
+
+*/
+
+.orders-container {
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(100% - 200px);
+    height: 100%;
+
+    margin-left: 200px;
+}
+
+
+
+.orders-box {
+    width: 80%;
+    padding: 20px;
+    border: 1px solid black;
+
+    text-align: center;
+    background-color: #24252A;
+}
+
+@media only screen and (max-width: 700px) {
+    .orders-container {
+        width: 100%;
+        margin: 20px 0px;
+        height: auto;
+    }
+
+    .orders-box {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+.orders-box > div:nth-of-type(1) {
+    font-size: 25px;
+    text-align: left;
+    padding: 20px;
+}
+
+.orders-item {
+    margin-bottom: 30px;
+    padding: 5px;
+}
+
+.orders-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.orders-item > div:nth-child(1) {
+    display: flex;
+    font-size: 20px;
+}
+
+.orders-item > div:nth-child(1) > div:nth-child(1) {
+    width: 50%;
+    text-align: left;
+    padding: 5px 10px;
+}
+
+.orders-item > div:nth-child(1) > div:nth-child(2) {
+    width: 50%;
+    text-align: right;
+    padding: 5px 10px;
+}
+
+.orders-item > div:nth-of-type(2) {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.orders-item > div:nth-of-type(2) div:nth-child(1) {
+    padding: 5px 10px;
+    font-size: 20px;
+}
+
+.orders-item > div:nth-of-type(2) div:nth-child(2) {
+    margin-left: auto;
+    background-color: rgba(255, 0, 0, 0.2);
+}
+
+.orders-item > div:nth-of-type(2) div:nth-child(2):hover {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.orders-item > div:nth-of-type(2) button {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 3px 10px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #f3f3f3;
+}
+
+.orders-box table {
+    width: 80%;
+    margin: auto;
+}
+
+.orders-box table th {
+    padding: 20px 0px;
+    border-bottom: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.orders-box table td {
+    padding: 10px 0px;
+}
+
+.orders-box table td span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.orders-box table td:nth-of-type(1) {
+    padding-right: 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.orders-box table td:nth-of-type(2) {
+    padding: 0px 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.orders-box table td:nth-of-type(3) {
+    padding: 0px 40px;
+    border-right: 3px solid rgba(255, 255, 255, 0.05);
+}
+
+.orders-box table td:nth-of-type(4) {
+    padding-left: 40px;
+}
+
+/*
+
+/ORDERS
+
+*/
+
+/*
+
+RESERVATIONS
+
+*/
+
+.reservations-controls {
+    display: flex;
+}
+
+.reservations-controls div {
+    margin: auto;
+    background-color: #3a3c4a;
+}
+
+.reservations-controls div:hover {
+    background-color: #535566
+}
+
+.reservations-controls button {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #f3f3f3;
+}
+
+/*
+
+/RESERVATIONS
 
 */
 

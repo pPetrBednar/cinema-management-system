@@ -1,13 +1,20 @@
 <?php
 
 class Database {
+
     private $hostname;
     private $username;
     private $password;
     private $dbname;
     private $charset;
+    private $pdo;
 
     protected function connect() {
+
+        if ($this->pdo != null) {
+            return $this->pdo;
+        }
+
         $this->hostname = "localhost";
         $this->username = "root";
         $this->password = "";
@@ -21,9 +28,12 @@ class Database {
             // PDO Config
             $pdo = new PDO($dsn, $this->username, $this->password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            return $pdo;
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $this->pdo = $pdo;
+            return $this->pdo;
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
     }
+
 }

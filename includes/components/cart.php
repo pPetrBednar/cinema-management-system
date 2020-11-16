@@ -47,12 +47,12 @@ if (!empty($_SESSION['user'])) {
                 ?>
                 <div class="cart-controls">
                     <div>
-                        <div>
+                        <div onclick="window.open('./actions/discardOrder.php', '_self')">
                             Discard
                         </div>
                     </div>
                     <div>
-                        <div>
+                        <div onclick="window.open('checkout.php', '_self')">
                             Checkout
                         </div>
                     </div>

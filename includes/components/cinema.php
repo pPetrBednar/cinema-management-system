@@ -139,6 +139,8 @@ if (!empty($_SESSION['user'])) {
                     <br />
                     <input type="datetime-local" name="start">
                     <br />
+                    <input type="number" name="price" placeholder="Price">
+                    <br />
                     <select name="movies">
                         <?php
                         try {

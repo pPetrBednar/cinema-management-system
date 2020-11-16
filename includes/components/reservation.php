@@ -12,6 +12,12 @@ include_once 'includes/classes/Reservation.php';
 $dbm = new DatabaseManager;
 $programEntryId = filter_input(INPUT_GET, 'programEntry');
 
+if (!empty($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+} else {
+    $user = null;
+}
+
 if ($programEntryId) {
     $_SESSION['lastProgramEntry'] = $programEntryId;
 
@@ -45,12 +51,6 @@ if ($programEntry != null) {
                 <div>Screen</div>
                 <table>
                     <?php
-                    if (!empty($_SESSION['user'])) {
-                        $user = unserialize($_SESSION['user']);
-                    } else {
-                        $user = null;
-                    }
-
                     try {
                         $seats = $dbm->getSeatsOfHall($hall->id);
                     } catch (NO_DATA_FOUND_EXCEPTION $e) {
@@ -122,16 +122,22 @@ if ($programEntry != null) {
                                             </td>
                                             <?php
                                         } else {
-                                            ?>
-                                            <td class="hall-seat-empty hall-seat-reserve">
-                                                <form action="./actions/selectSeat.php" method="post">
-                                                    <input type="number" name="programEntryId" value="<?= $programEntry->id; ?>" style="display: none;" >
-                                                    <input type="number" name="posX" value="<?= $x + 1; ?>" style="display: none;" >
-                                                    <input type="number" name="posY" value="<?= $y + 1; ?>" style="display: none;" >
-                                                    <button type="submit"></button>
-                                                </form>
-                                            </td>
-                                            <?php
+                                            if ($user != null) {
+                                                ?>
+                                                <td class="hall-seat-empty hall-seat-reserve">
+                                                    <form action="./actions/selectSeat.php" method="post">
+                                                        <input type="number" name="programEntryId" value="<?= $programEntry->id; ?>" style="display: none;" >
+                                                        <input type="number" name="posX" value="<?= $x + 1; ?>" style="display: none;" >
+                                                        <input type="number" name="posY" value="<?= $y + 1; ?>" style="display: none;" >
+                                                        <button type="submit"></button>
+                                                    </form>
+                                                </td>
+                                                <?php
+                                            } else {
+                                                ?>
+                                                <td class="hall-seat-empty" onclick="alert('Login to reserve')"></td>
+                                                <?php
+                                            }
                                         }
                                     } else {
                                         ?>

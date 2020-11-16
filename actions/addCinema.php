@@ -21,7 +21,7 @@ $city = filter_input(INPUT_POST, 'city');
 $address = filter_input(INPUT_POST, 'address');
 $coverUrl = filter_input(INPUT_POST, 'coverUrl');
 
-if ($title && $city && $address && $coverUrl) {
+if ($title && $city && $address) {
     $dbm = new DatabaseManager;
     try {
         $dbm->addCinema($title, $city, $address, $coverUrl);

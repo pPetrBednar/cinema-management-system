@@ -19,6 +19,7 @@ if ($programEntryId && $posX && $posY) {
     if (isset($_SESSION['reservations']) && $_SESSION['reservations'] != null) {
         //echo "this\n";
         $reservations = unserialize($_SESSION['reservations']);
+        $found = false;
 
         foreach ($reservations as $kr => $reservation) {
             if ($reservation->programEntryId == $programEntryId) {
@@ -31,11 +32,13 @@ if ($programEntryId && $posX && $posY) {
 
                         if (empty($reservations)) {
                             unset($_SESSION['reservations']);
+                            $found = true;
                             //echo "this1\n";
                             break 2;
                         }
 
                         $_SESSION['reservations'] = serialize($reservations);
+                        $found = true;
                         //echo "this2\n";
                         break 2;
                     }
@@ -43,14 +46,16 @@ if ($programEntryId && $posX && $posY) {
 
                 array_push($reservation->seats, new Seat("", $posX, $posY, "", ""));
                 $_SESSION['reservations'] = serialize($reservations);
+                $found = true;
                 //echo "this3\n";
                 break 1;
-            } else {
-                array_push($reservations, new Reservation("", $programEntryId, array(new Seat("", $posX, $posY, "", ""))));
-                $_SESSION['reservations'] = serialize($reservations);
-                //echo "this4\n";
-                break 1;
             }
+        }
+
+        if (!$found) {
+            array_push($reservations, new Reservation("", $programEntryId, array(new Seat("", $posX, $posY, "", ""))));
+            $_SESSION['reservations'] = serialize($reservations);
+            //echo "this4\n";
         }
     } else {
         $reservations = array();

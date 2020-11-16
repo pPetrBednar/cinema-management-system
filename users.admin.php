@@ -43,34 +43,41 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
                 </tr>
                 <?php
                 $dbm = new DatabaseManager;
-                $users = $dbm->getAllUsers();
 
-                foreach ($users as $res) {
-                    if ($user->email == $res->email) {
-                        continue;
-                    }
-                    ?>
-                    <tr>
-                    <form action="edit.admin.php" method="post">
-                        <td><input type="text" name="email" value="<?= $res->email; ?>"></td>
-                        <td><input type="text" name="firstName" value="<?= $res->firstName; ?>"></td>
-                        <td><input type="text" name="lastName" value="<?= $res->lastName; ?>"></td>
-                        <td><input type="text" name="permission" value="<?= $res->permission; ?>"></td>
-                        <td><?= $res->registered; ?></td>
-                        <td>
-                            <input type="text" name="action" value="editUserAdmin" style="display: none;">
-                            <button type="submit">Edit</button>
-                        </td>
-                    </form>
-                    <td>
+                try {
+                    $users = $dbm->getAllUsers();
+                } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                    $users = null;
+                }
+
+                if ($users != null) {
+                    foreach ($users as $res) {
+                        if ($user->email == $res->email) {
+                            continue;
+                        }
+                        ?>
+                        <tr>
                         <form action="edit.admin.php" method="post">
-                            <input type="text" name="action" value="deleteUser" style="display: none;">
-                            <input type="text" name="email" value="<?= $res->email; ?>" style="display: none;">
-                            <button type="submit">Delete</button>
+                            <td><input type="text" name="email" value="<?= $res->email; ?>"></td>
+                            <td><input type="text" name="firstName" value="<?= $res->firstName; ?>"></td>
+                            <td><input type="text" name="lastName" value="<?= $res->lastName; ?>"></td>
+                            <td><input type="text" name="permission" value="<?= $res->permission; ?>"></td>
+                            <td><?= $res->registered; ?></td>
+                            <td>
+                                <input type="text" name="action" value="editUserAdmin" style="display: none;">
+                                <button type="submit">Edit</button>
+                            </td>
                         </form>
-                    </td>
-                    </tr>
-                    <?php
+                        <td>
+                            <form action="edit.admin.php" method="post">
+                                <input type="text" name="action" value="deleteUser" style="display: none;">
+                                <input type="text" name="email" value="<?= $res->email; ?>" style="display: none;">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </td>
+                        </tr>
+                        <?php
+                    }
                 }
                 ?>
             </table>

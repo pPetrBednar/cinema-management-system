@@ -62,10 +62,10 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
         <?php
     } else {
         ?>
-        <div class="menu-item">
+        <div class="menu-item" onclick="window.open('orders.php', '_self')">
             Orders
         </div>
-        <div class="menu-item">
+        <div class="menu-item" onclick="window.open('history.php', '_self')">
             History
         </div>
         <div class="menu-item-account">
