@@ -55,6 +55,7 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
                         if ($user->email == $res->email) {
                             continue;
                         }
+                        $date = DateTime::createFromFormat("Y-m-d H:i:s", $res->registered);
                         ?>
                         <tr>
                         <form action="edit.admin.php" method="post">
@@ -62,7 +63,7 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
                             <td><input type="text" name="firstName" value="<?= $res->firstName; ?>"></td>
                             <td><input type="text" name="lastName" value="<?= $res->lastName; ?>"></td>
                             <td><input type="text" name="permission" value="<?= $res->permission; ?>"></td>
-                            <td><?= $res->registered; ?></td>
+                            <td><?= $date->format("H:i d. m. Y"); ?></td>
                             <td>
                                 <input type="text" name="action" value="editUserAdmin" style="display: none;">
                                 <button type="submit">Edit</button>

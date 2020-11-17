@@ -1,8 +1,8 @@
 <?php
 defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
 ?>
-<div class="menu">
-    <div class="menu-title" onclick="window.open('index.php', '_self')">Cinematic</div>
+<section id="menu">
+    <header class="menu-title" onclick="window.open('./', '_self')">Cinematic</header>
     <div class="menu-header">
         Portal
     </div>
@@ -32,6 +32,9 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <div class="menu-item" onclick="window.open('reservations.php', '_self')">
                 Reservations
             </div>
+            <div class="menu-item" onclick="window.open('completedOrder.php', '_self')">
+                Completed orders
+            </div>
             <?php
         }
 
@@ -40,8 +43,11 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <div class="menu-header">
                 Administration
             </div>
-            <div class="menu-item" onclick="window.open('users.admin.php', '_self')">
+            <div class="menu-item" onclick="window.open('reservations.php', '_self')">
                 Reservations
+            </div>
+            <div class="menu-item" onclick="window.open('completedOrder.php', '_self')">
+                Completed orders
             </div>
             <?php
         }
@@ -79,4 +85,4 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
         <?php
     }
     ?>
-</div>
+</section>

@@ -39,6 +39,12 @@ if ($programEntryId) {
         } catch (NO_DATA_FOUND_EXCEPTION $e) {
             $occupiedSeats = null;
         }
+
+        try {
+            $confirmedSeats = $dbm->getConfirmedSeatsOfProgramEntry($programEntry->id);
+        } catch (NO_DATA_FOUND_EXCEPTION $e) {
+            $confirmedSeats = null;
+        }
     }
 }
 
@@ -85,6 +91,12 @@ if ($programEntry != null) {
 
                         if ($occupiedSeats != null) {
                             foreach ($occupiedSeats as $seat) {
+                                $arr[$seat->posY - 1][$seat->posX - 1] = "occupied";
+                            }
+                        }
+
+                        if ($confirmedSeats != null) {
+                            foreach ($confirmedSeats as $seat) {
                                 $arr[$seat->posY - 1][$seat->posX - 1] = "occupied";
                             }
                         }

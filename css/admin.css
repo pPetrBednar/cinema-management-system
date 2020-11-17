@@ -18,7 +18,7 @@
 .users-admin-container button {
     padding: 2px 4px;
     font-size: 14px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0);
     color: #f3f3f3;
     width: 90%;
 }
@@ -42,7 +42,7 @@
 }
 
 .users-admin-container th {
-    background-color: #232323;
+    background-color: #24252A;
 }
 
 .users-admin-container td,
@@ -53,9 +53,9 @@
 }
 
 .users-admin-container tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: #3a3c4a;
 }
 
 .users-admin-container tr:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #535566;
 }

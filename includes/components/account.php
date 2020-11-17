@@ -14,14 +14,14 @@ $user = unserialize($_SESSION['user']);
                 <div>First name:</div>
                 <div>
                     <div id="firstName"><?= $user->firstName == "" ? "?" : $user->firstName; ?></div>
-                    <input id="firstNameInput" type="text" name="firstName" value="<?= $user->firstName; ?>" style="display: none;">
+                    <input id="firstNameInput" type="text" name="firstName" value="<?= $user->firstName; ?>" placeholder="First name" style="display: none;">
                 </div>
             </div>
             <div class="account-item">
                 <div>Last name:</div>
                 <div>
                     <div id="lastName"><?= $user->lastName == "" ? "?" : $user->lastName; ?></div>
-                    <input id="lastNameInput" type="text" name="lastName" value="<?= $user->lastName; ?>" style="display: none;">
+                    <input id="lastNameInput" type="text" name="lastName" value="<?= $user->lastName; ?>" placeholder="Last name" style="display: none;">
                 </div>
             </div>
             <div class="account-item">
@@ -34,7 +34,7 @@ $user = unserialize($_SESSION['user']);
             </div>
             <div class="account-edit">
                 <div>
-                    <div>Change password</div>
+                    <div onclick="openDialog();">Change password</div>
                 </div>
                 <div>
                     <div id="editInformationBtn" onclick="editInformation()">Edit information</div>
@@ -43,5 +43,19 @@ $user = unserialize($_SESSION['user']);
             </div>
         </form>
     </div>
+</div>
+<div class="account-change-password-dialog-container" id="account-change-password-dialog">
+    <form action="./actions/changePassword.php" method="post">
+        <div class="account-change-password-dialog-box">
+            <div onclick="closeDialog();">x</div>
+            <span>Change password</span>
+            <br />
+            <input type="password" name="password" placeholder="Password">
+            <br />
+            <input type="password" name="passwordAgain" placeholder="Password again">
+            <br />
+            <input type="submit" value="Change" />
+        </div>
+    </form>
 </div>
 <script type="text/javascript" src="js/account.js"></script>

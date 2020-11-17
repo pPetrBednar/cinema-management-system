@@ -8,8 +8,8 @@ include_once 'includes/classes/Cinema.php';
 include_once 'includes/classes/Hall.php';
 include_once 'includes/classes/Seat.php';
 include_once 'includes/classes/ProgramEntry.php';
-include_once 'includes/classes/Reservation.php';
-include_once 'includes/classes/Order.php';
+include_once 'includes/classes/CompletedReservation.php';
+include_once 'includes/classes/CompletedOrder.php';
 
 $dbm = new DatabaseManager;
 
@@ -17,21 +17,21 @@ if (!empty($_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);
 
     try {
-        $orders = $dbm->getActiveOrdersOfUser($user->id);
+        $orders = $dbm->getCompletedOrdersOfUser($user->id);
     } catch (NO_DATA_FOUND_EXCEPTION $e) {
         $orders = null;
     }
     ?>
     <div class="orders-container">
         <div class="orders-box">
-            <div>Active orders:  <?= $orders == null ? "&nbsp;&nbsp;&nbsp;No orders" : ""; ?></div>
+            <div>Completed orders:  <?= $orders == null ? "&nbsp;&nbsp;&nbsp;No orders" : ""; ?></div>
             <div class="orders-list">
                 <?php
                 if ($orders != null) {
                     foreach ($orders as $order) {
 
                         try {
-                            $reservations = $dbm->getReservationsOfOrder($order->id);
+                            $reservations = $dbm->getReservationsOfCompletedOrder($order->id);
                         } catch (NO_DATA_FOUND_EXCEPTION $e) {
                             $reservations = null;
                         }
@@ -90,13 +90,7 @@ if (!empty($_SESSION['user'])) {
                                 </table>
                                 <div>
                                     <div>
-                                        Total price: <?= $sumPrice; ?> CZK
-                                    </div>
-                                    <div>
-                                        <form action="./actions/deleteOrder.php" method="post">
-                                            <input type="number" name="id" value="<?= $order->id; ?>" style="display: none;">
-                                            <button type="submit">Cancel</button>
-                                        </form>
+                                        Paid price: <?= $sumPrice; ?> CZK
                                     </div>
                                 </div>
                             </div>

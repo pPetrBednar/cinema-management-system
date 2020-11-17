@@ -64,6 +64,14 @@ class RESERVATION_FAILED_EXCEPTION extends Exception {
 
 }
 
+class ORDER_CONFIRMATION_FAILED_EXCEPTION extends Exception {
+
+    public function __construct() {
+        parent::__construct("Confirmation process of order failed");
+    }
+
+}
+
 final class DatabaseManager extends Database {
 
     private $bCryptOptions = [
@@ -104,6 +112,16 @@ final class DatabaseManager extends Database {
         if (!$stmt->rowCount()) {
             throw new REGISTRATION_FAILED_EXCEPTION;
         }
+    }
+
+    public function changePassword($user, $password, $passwordAgain) {
+
+        if ($password != $passwordAgain) {
+            throw new PASSWORDS_MISMATCH_EXCEPTION;
+        }
+
+        $stmt = $this->connect()->prepare("UPDATE users SET password = ? WHERE id = ?");
+        $stmt->execute([password_hash($password, PASSWORD_BCRYPT, $this->bCryptOptions), $user->id]);
     }
 
     public function getAllUsers() {
@@ -374,6 +392,54 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
+    public function getSeatIdsOfReservation($id) {
+
+        $stmt = $this->connect()->prepare("SELECT seat_id FROM `reserved_seats` WHERE `reservation_id` = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Seat($row['seat_id'], "", "", "", ""));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getSeatsOfCompletedReservation($id) {
+
+        $stmt = $this->connect()->prepare("SELECT `confirmed_seats`.`seat_id`, `seats`.`pos_x`, `seats`.`pos_y`, `seats`.`type` FROM `confirmed_seats` INNER JOIN `seats` ON `confirmed_seats`.`seat_id` = `seats`.`id` WHERE `completed_reservation_id` = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Seat($row['seat_id'], $row['pos_x'], $row['pos_y'], $row['type'], ""));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getConfirmedSeatsOfProgramEntry($id) {
+
+        $stmt = $this->connect()->prepare("SELECT pos_x, pos_y, type FROM `seats` INNER JOIN `confirmed_seats` ON `confirmed_seats`.`seat_id` = `seats`.`id` INNER JOIN `completed_reservations` ON `confirmed_seats`.`completed_reservation_id` = `completed_reservations`.`id` WHERE `completed_reservations`.`program_entry_id` = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new Seat("", $row['pos_x'], $row['pos_y'], $row['type'], ""));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
     public function addOrder($reservations, $user) {
         /* echo "<pre>";
           var_dump($reservations);
@@ -470,6 +536,22 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
+    public function getCompletedOrdersOfUser($userId) {
+
+        $stmt = $this->connect()->prepare("SELECT * FROM completed_orders WHERE user_id = ? ORDER BY completed DESC");
+        $stmt->execute([$userId]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new CompletedOrder($row['id'], $row['created'], $row['completed'], $row['user_id']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
     public function getActiveOrder($id) {
 
         $stmt = $this->connect()->prepare("SELECT * FROM orders WHERE id = ?");
@@ -483,10 +565,23 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
-    public function getReservationsOfOrder($orderId) {
+    public function getCompletedOrder($id) {
 
-        $stmt = $this->connect()->prepare("SELECT reservations.id, reservations.order_id, reservations.program_entry_id, COUNT(reserved_seats.seat_id) AS count_seats FROM reservations JOIN reserved_seats ON reservations.id = reserved_seats.reservation_id WHERE reservations.order_id = ? GROUP BY reservations.id");
-        $stmt->execute([$orderId]);
+        $stmt = $this->connect()->prepare("SELECT * FROM completed_orders WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            while ($row = $stmt->fetch()) {
+                return new CompletedOrder($row['id'], $row['created'], $row['completed'], $row['user_id']);
+            }
+        }
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getReservationsOfOrder($id) {
+
+        $stmt = $this->connect()->prepare("SELECT reservations.id, reservations.program_entry_id, COUNT(reserved_seats.seat_id) AS count_seats FROM reservations JOIN reserved_seats ON reservations.id = reserved_seats.reservation_id WHERE reservations.order_id = ? GROUP BY reservations.id");
+        $stmt->execute([$id]);
 
         if ($stmt->rowCount()) {
             $res = array();
@@ -497,6 +592,69 @@ final class DatabaseManager extends Database {
         }
 
         throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function getReservationsOfCompletedOrder($id) {
+
+        $stmt = $this->connect()->prepare("SELECT completed_reservations.id, completed_reservations.price, completed_reservations.program_entry_id, COUNT(confirmed_seats.seat_id) AS count_seats FROM completed_reservations JOIN confirmed_seats ON completed_reservations.id = confirmed_seats.completed_reservation_id WHERE completed_reservations.completed_order_id = ? GROUP BY completed_reservations.id");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount()) {
+            $res = array();
+            while ($row = $stmt->fetch()) {
+                array_push($res, new CompletedReservation($row['id'], $row['price'], $row['program_entry_id'], $row['count_seats']));
+            }
+            return $res;
+        }
+
+        throw new NO_DATA_FOUND_EXCEPTION;
+    }
+
+    public function completeOrder($id) {
+
+        $order = $this->getActiveOrder($id);
+        $reservations = $this->getReservationsOfOrder($order->id);
+
+        try {
+            // Migrate Order
+            $this->connect()->beginTransaction();
+            $stmt1 = $this->connect()->prepare("INSERT INTO completed_orders (id, created, user_id) VALUES (NULL, ?, ?)");
+            $stmt1->execute([$order->created, $order->userId]);
+            $orderId = $this->connect()->lastInsertId();
+
+            foreach ($reservations as $reservation) {
+
+                $programEntry = $this->getProgramEntryNoData($reservation->programEntryId);
+
+                // Migrate reservation
+                $stmt2 = $this->connect()->prepare("INSERT INTO completed_reservations (id, price, completed_order_id, program_entry_id) VALUES (NULL, ?, ?, ?)");
+                $stmt2->execute([$programEntry->price * $reservation->seats, $orderId, $reservation->programEntryId]);
+                $reservationId = $this->connect()->lastInsertId();
+
+                $seats = $this->getSeatIdsOfReservation($reservation->id);
+
+                // Migrate reserved seats
+                foreach ($seats as $seat) {
+                    $stmt3 = $this->connect()->prepare("INSERT INTO confirmed_seats (id, completed_reservation_id, seat_id) VALUES (NULL, ?, ?)");
+                    $stmt3->execute([$reservationId, $seat->id]);
+                }
+            }
+
+            // Delete old order
+            $this->deleteOrder($id);
+
+            $this->connect()->commit();
+            return $orderId;
+        } catch (PDOException $e) {
+            $this->connect()->rollback();
+            throw new ORDER_CONFIRMATION_FAILED_EXCEPTION;
+        } catch (NO_DATA_FOUND_EXCEPTION $e) {
+            $this->connect()->rollback();
+            throw new ORDER_CONFIRMATION_FAILED_EXCEPTION;
+        } catch (NO_DATA_DELETED_EXCEPTION $e) {
+            $this->connect()->rollback();
+            throw new ORDER_CONFIRMATION_FAILED_EXCEPTION;
+        }
     }
 
 }
