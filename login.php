@@ -3,50 +3,49 @@ session_start();
 $_SESSION['page'] = "login";
 
 define('LOADER', true);
-include_once 'includes/db.inc.php';
-include_once 'includes/dbm.inc.php';
-include_once 'includes/user.inc.php';
+include_once 'includes/classes/Database.php';
+include_once 'includes/classes/DatabaseManager.php';
+include_once 'includes/classes/User.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <?php
-  include 'components/head.comp.php';
-  ?>
-</head>
+    <head>
+        <?php
+        include 'includes/components/head.php';
+        ?>
+    </head>
 
-<body>
-  <?php
+    <body>
+        <?php
+        $state = " ";
+        if (filter_input(INPUT_POST, 'email') && filter_input(INPUT_POST, 'password')) {
+            $dbm = new DatabaseManager;
 
-  $state = " ";
-  if (isset($_POST['email']) && isset($_POST['password'])) {
-    $dbm = new Dbm;
+            try {
+                $dbm->login(filter_input(INPUT_POST, 'email'), filter_input(INPUT_POST, 'password'));
+                header("Location: ./");
+            } catch (USER_NOT_FOUND_EXCEPTION $e) {
+                $state = $e->getMessage();
+            } catch (WRONG_PASSWORD_EXCEPTION $e) {
+                $state = $e->getMessage();
+            }
+        }
 
-    try {
-      $dbm->login($_POST['email'], $_POST['password']);
-      header("Location: ./");
-    } catch (USER_NOT_FOUND_EXCEPTION $e) {
-      $state = $e->getMessage();
-    } catch (WRONG_PASSWORD_EXCEPTION $e) {
-      $state = $e->getMessage();
-    }
-  }
+        include 'includes/components/menu.php';
+        include 'includes/components/login.php';
+        include 'includes/components/footer.php';
 
-  include 'components/menu.comp.php';
-  include 'components/login.comp.php';
-  include 'components/footer.comp.php';
-
-  if ($state != " ") {
-  ?>
-    <script type="text/javascript">
-      window.onload = (e) => {
-        alert("<?= $state ?>");
-      }
-    </script>
-  <?php
-  }
-  ?>
-</body>
+        if ($state != " ") {
+            ?>
+            <script type="text/javascript">
+                window.onload = (e) => {
+                    alert("<?= $state ?>");
+                };
+            </script>
+            <?php
+        }
+        ?>
+    </body>
 
 </html>
