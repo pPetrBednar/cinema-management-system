@@ -20,7 +20,7 @@ if ($id) {
 
 if ($movie != null) {
     ?>
-    <div class="movie-container">
+    <section class="movie-container" id="movie">
         <div class="movie-box">
             <div>
                 <div>
@@ -34,7 +34,7 @@ if ($movie != null) {
                 <div><span>Description:</span><br><?= $movie->description; ?></div>
             </div>
         </div>
-    </div>
+    </section>
     <?php
 }
 
@@ -42,10 +42,10 @@ if (!empty($_SESSION['user'])) {
     $user = unserialize($_SESSION['user']);
     if ($user->permission == 0) {
         ?>
-        <div class="movies-add" onclick="openDialog();">
+        <section class="movies-add" onclick="openDialog();">
             Edit movie
-        </div>
-        <div class="movies-add-dialog-container" id="movies-add-dialog">
+        </section>
+        <section class="movies-add-dialog-container" id="movies-add-dialog">
             <form action="./actions/editMovie.php" method="post">
                 <div class="movies-add-dialog-box">
                     <div onclick="closeDialog();">x</div>
@@ -65,7 +65,7 @@ if (!empty($_SESSION['user'])) {
                     <input type="submit" value="Edit" />
                 </div>
             </form>
-        </div>
+        </section>
         <script type="text/javascript" src="js/movies.js"></script>
         <?php
     }

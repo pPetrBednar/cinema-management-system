@@ -21,7 +21,7 @@ if ($id) {
 
 if ($hall != null) {
     ?>
-    <div class="hall-container">
+    <section class="hall-container" id="hall">
         <div class="hall-box">
             <div>
                 <div>
@@ -113,17 +113,17 @@ if ($hall != null) {
                 ?>
             </table>
         </div>
-    </div>
+    </section>
     <?php
 }
 
 if ($user != null) {
     if ($user->permission == 0) {
         ?>
-        <div class="halls-add" onclick="openDialog();">
+        <section class="halls-add" onclick="openDialog();">
             Edit hall
-        </div>
-        <div class="halls-add-dialog-container" id="halls-add-dialog">
+        </section>
+        <section class="halls-add-dialog-container" id="halls-add-dialog">
             <form action="./actions/editHall.php" method="post">
                 <div class="halls-add-dialog-box">
                     <div onclick="closeDialog();">x</div>
@@ -138,16 +138,16 @@ if ($user != null) {
                     <input type="submit" value="Edit" />
                 </div>
             </form>
-        </div>
+        </section>
         <?php
     }
 
     if ($user->permission == 0 || $user->permission == 10) {
         ?>
-        <div class="hall-add-seat" onclick="openDialogProgram();">
+        <section class="hall-add-seat" onclick="openDialogProgram();">
             Add seat
-        </div>
-        <div class="hall-add-seat-dialog-container" id="hall-add-seat-dialog">
+        </section>
+        <section class="hall-add-seat-dialog-container" id="hall-add-seat-dialog">
             <form action="./actions/addSeat.php" method="post">
                 <div class="hall-add-seat-dialog-box">
                     <div onclick="closeDialogProgram();">x</div>
@@ -164,7 +164,7 @@ if ($user != null) {
                     <input type="submit" value="Add" />
                 </div>
             </form>
-        </div>
+        </section>
         <script type="text/javascript" src="js/halls.js"></script>
         <?php
     }

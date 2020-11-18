@@ -21,7 +21,7 @@ if (!empty($_SESSION['user'])) {
         $tickets = 0;
         $sumPrice = 0;
         ?>
-        <div class="checkout-container">
+        <section class="checkout-container" id="checkout">
             <div class="checkout-box">
                 <div>Order summary:</div>
                 <div>
@@ -97,7 +97,7 @@ if (!empty($_SESSION['user'])) {
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         <?php
     }
 } else {

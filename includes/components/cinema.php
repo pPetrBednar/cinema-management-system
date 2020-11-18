@@ -29,7 +29,7 @@ if (!empty($_SESSION['user'])) {
 
 if ($cinema != null) {
     ?>
-    <div class="cinema-container">
+    <section class="cinema-container" id="cinema">
         <div class="cinema-box">
             <div>
                 <div>
@@ -114,16 +114,16 @@ if ($cinema != null) {
                 ?>
             </table>
         </div>
-    </div>
+    </section>
     <?php
 }
 
 if ($user != null && $user->permission == 0) {
     ?>
-    <div class="cinemas-add" onclick="openDialog();">
+    <section class="cinemas-add" onclick="openDialog();">
         Edit cinema
-    </div>
-    <div class="cinemas-add-dialog-container" id="cinemas-add-dialog">
+    </section>
+    <section class="cinemas-add-dialog-container" id="cinemas-add-dialog">
         <form action="./actions/editCinema.php" method="post">
             <div class="cinemas-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
@@ -141,16 +141,16 @@ if ($user != null && $user->permission == 0) {
                 <input type="submit" value="Edit" />
             </div>
         </form>
-    </div>
+    </section>
     <?php
 }
 
 if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
     ?>
-    <div class="cinema-add-program" onclick="openDialogProgram();">
+    <section class="cinema-add-program" onclick="openDialogProgram();">
         Add program entry
-    </div>
-    <div class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
+    </section>
+    <section class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
         <form action="./actions/addProgramEntry.php" method="post">
             <div class="cinema-add-program-dialog-box">
                 <div onclick="closeDialogProgram();">x</div>
@@ -200,7 +200,7 @@ if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
                 <input type="submit" value="Add" />
             </div>
         </form>
-    </div>
+    </section>
     <script type="text/javascript" src="js/cinemas.js"></script>
     <?php
 }

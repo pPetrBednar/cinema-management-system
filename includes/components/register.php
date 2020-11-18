@@ -1,7 +1,7 @@
 <?php
 defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
 ?>
-<div class="container-register">
+<section class="container-register" id="register">
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <div class="box-register">
             <span>Register</span>
@@ -11,7 +11,6 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <input type="password" name="password" placeholder="Password" />
             <br />
             <input type="password" name="passwordAgain" placeholder="Password again" />
-
             <div>
                 Already have an account?
                 <span onclick="window.open('login.php', '_self')">Login</span>
@@ -19,4 +18,4 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <input type="submit" value="Register" />
         </div>
     </form>
-</div>
+</section>

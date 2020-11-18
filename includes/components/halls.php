@@ -26,7 +26,7 @@ if (!empty($_SESSION['user'])) {
     $user = null;
 }
 ?>
-<div class="halls-container" id="halls">
+<section class="halls-container" id="halls">
     <?php
     if ($halls != null) {
         foreach ($halls as $hall) {
@@ -51,14 +51,14 @@ if (!empty($_SESSION['user'])) {
         }
     }
     ?>
-</div>
+</section>
 <?php
 if ($user != null && $user->permission == 0) {
     ?>
-    <div class="halls-add" onclick="openDialog();">
+    <section class="halls-add" onclick="openDialog();">
         Add new hall
-    </div>
-    <div class="halls-add-dialog-container" id="halls-add-dialog">
+    </section>
+    <section class="halls-add-dialog-container" id="halls-add-dialog">
         <form action="./actions/addHall.php" method="post">
             <div class="halls-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
@@ -73,7 +73,7 @@ if ($user != null && $user->permission == 0) {
                 <input type="submit" value="Add" />
             </div>
         </form>
-    </div>
+    </section>
     <script type="text/javascript" src="js/halls.js"></script>
     <?php
 }

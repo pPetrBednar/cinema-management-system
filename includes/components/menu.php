@@ -78,7 +78,7 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <div class="menu-item" onclick="window.open('account.php', '_self')">
                 Account
             </div>
-            <div class="menu-item-logout" onclick="window.open('logout.php', '_self')">
+            <div class="menu-item-logout" onclick="window.open('./actions/logout.php', '_self')">
                 &larr;
             </div>
         </div>

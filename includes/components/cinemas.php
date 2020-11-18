@@ -20,7 +20,7 @@ if (!empty($_SESSION['user'])) {
     $user = null;
 }
 ?>
-<div class="cinemas-container" id="cinemas">
+<section class="cinemas-container" id="cinemas">
     <?php
     if ($cinemas != null) {
         foreach ($cinemas as $cinema) {
@@ -45,14 +45,14 @@ if (!empty($_SESSION['user'])) {
         }
     }
     ?>
-</div>
+</section>
 <?php
 if ($user != null && $user->permission == 0) {
     ?>
-    <div class="cinemas-add" onclick="openDialog();">
+    <section class="cinemas-add" onclick="openDialog();">
         Add new cinema
-    </div>
-    <div class="cinemas-add-dialog-container" id="cinemas-add-dialog">
+    </section>
+    <section class="cinemas-add-dialog-container" id="cinemas-add-dialog">
         <form action="./actions/addCinema.php" method="post">
             <div class="cinemas-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
@@ -69,7 +69,7 @@ if ($user != null && $user->permission == 0) {
                 <input type="submit" value="Add" />
             </div>
         </form>
-    </div>
+    </section>
     <script type="text/javascript" src="js/cinemas.js"></script>
     <?php
 }

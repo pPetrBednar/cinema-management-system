@@ -12,7 +12,7 @@ if (!empty($_SESSION['user'])) {
 
     if ($user->permission == 0) {
         ?>
-        <div class="users-container">
+        <section class="users-container" id="users">
             <table>
                 <tr>
                     <th>Email</th>
@@ -71,8 +71,10 @@ if (!empty($_SESSION['user'])) {
                 }
                 ?>
             </table>
-        </div>
+        </section>
         <?php
+    } else {
+        header("Location: ./");
     }
 }
 ?>
