@@ -28,6 +28,7 @@ if (!empty($_SESSION['user'])) {
             }
             ?>
             <section class="orders-container" id="reservations">
+                <h2 class="display-none">Reservations</h2>
                 <div class="orders-box">
                     <div>Active order: <?= $order == null ? "&nbsp;&nbsp;&nbsp;Order not found" : ""; ?></div>
                     <div class="orders-list">
@@ -127,7 +128,8 @@ if (!empty($_SESSION['user'])) {
             <?php
         } else {
             ?>
-            <div class="orders-container" id="reservations">
+            <section class="orders-container" id="reservations">
+                <h2 class="display-none">Reservations</h2>
                 <div class="orders-dialog">
                     <input id="order-search" type="number" name="id" placeholder="Order id">
                     <div onclick="window.open('reservations.php?id=' + document.getElementById('order-search').value, '_self')">Search</div>

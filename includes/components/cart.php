@@ -64,11 +64,11 @@ if (!empty($_SESSION['user'])) {
             ?>
         </div>
         <div class="cart-box" onclick="openCloseCart()" onmouseover="openCloseCartHover()" onmouseout="openCloseCartHover()">
-            Cart
+            <h3>Cart</h3>
             <?= $reservations != null ? "<div>" . count($reservations) . "</div>" : ""; ?>
         </div>
     </section>
-    <script type="text/javascript" src="js/cart.js"></script>
+    <script src="js/cart.js"></script>
     <?php
 }
 ?>

@@ -28,6 +28,7 @@ if (!empty($_SESSION['user'])) {
             }
             ?>
             <section class="orders-container" id="complete-order">
+                <h2 class="display-none">Complete order</h2>
                 <div class="orders-box">
                     <div>Completed order:  <?= $order == null ? "&nbsp;&nbsp;&nbsp;Order not found" : ""; ?></div>
                     <div class="orders-list">
@@ -119,6 +120,7 @@ if (!empty($_SESSION['user'])) {
         } else {
             ?>
             <section class="orders-container" id="complete-order">
+                <h2 class="display-none">Complete order</h2>
                 <div class="orders-dialog">
                     <input id="order-search" type="number" name="id" placeholder="Completed order id">
                     <div onclick="window.open('completedOrder.php?id=' + document.getElementById('order-search').value, '_self')">Search</div>

@@ -27,6 +27,7 @@ if (!empty($_SESSION['user'])) {
 }
 ?>
 <section class="halls-container" id="halls">
+    <h2 class="display-none">Halls</h2>
     <?php
     if ($halls != null) {
         foreach ($halls as $hall) {
@@ -42,7 +43,7 @@ if (!empty($_SESSION['user'])) {
                     <?php
                 }
                 ?>
-                <img class="gallery-img" src="img/placeholder-image.png" />
+                <img class="gallery-img" src="img/placeholder-image.png" alt="<?= $hall->title . " cover image"; ?>" />
                 <div>
                     <span><?= $hall->uid; ?></span>
                 </div>
@@ -56,13 +57,13 @@ if (!empty($_SESSION['user'])) {
 if ($user != null && $user->permission == 0) {
     ?>
     <section class="halls-add" onclick="openDialog();">
-        Add new hall
+        <h3>Add new hall</h3>
     </section>
     <section class="halls-add-dialog-container" id="halls-add-dialog">
         <form action="./actions/addHall.php" method="post">
             <div class="halls-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
-                <span>Add hall</span>
+                <h3>Add hall</h3>
                 <br />
                 <input type="text" name="uid" placeholder="Uid" />
                 <br />
@@ -74,7 +75,7 @@ if ($user != null && $user->permission == 0) {
             </div>
         </form>
     </section>
-    <script type="text/javascript" src="js/halls.js"></script>
+    <script src="js/halls.js"></script>
     <?php
 }
 ?>

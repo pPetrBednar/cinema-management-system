@@ -30,10 +30,11 @@ if (!empty($_SESSION['user'])) {
 if ($cinema != null) {
     ?>
     <section class="cinema-container" id="cinema">
+        <h2 class="display-none">Cinema</h2>
         <div class="cinema-box">
             <div>
                 <div>
-                    <img src="<?= $cinema->coverUrl == null ? "img/placeholder-image.png" : $cinema->coverUrl; ?>" />
+                    <img src="<?= $cinema->coverUrl == null ? "img/placeholder-image.png" : $cinema->coverUrl; ?>" alt="<?= $cinema->title . " cover image"; ?>"/>
                 </div>
             </div>
             <div>
@@ -121,13 +122,13 @@ if ($cinema != null) {
 if ($user != null && $user->permission == 0) {
     ?>
     <section class="cinemas-add" onclick="openDialog();">
-        Edit cinema
+        <h3>Edit cinema</h3>
     </section>
     <section class="cinemas-add-dialog-container" id="cinemas-add-dialog">
         <form action="./actions/editCinema.php" method="post">
             <div class="cinemas-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
-                <span>Edit cinema</span>
+                <h3>Edit cinema</h3>
                 <br />
                 <input type="text" name="title" placeholder="Title" value="<?= $cinema->title; ?>" />
                 <br />
@@ -148,13 +149,13 @@ if ($user != null && $user->permission == 0) {
 if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
     ?>
     <section class="cinema-add-program" onclick="openDialogProgram();">
-        Add program entry
+        <h3>Add program entry</h3>
     </section>
     <section class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
         <form action="./actions/addProgramEntry.php" method="post">
             <div class="cinema-add-program-dialog-box">
                 <div onclick="closeDialogProgram();">x</div>
-                <span>Add program entry</span>
+                <h3>Add program entry</h3>
                 <br />
                 <input type="datetime-local" name="start">
                 <br />
@@ -201,7 +202,7 @@ if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
             </div>
         </form>
     </section>
-    <script type="text/javascript" src="js/cinemas.js"></script>
+    <script src="js/cinemas.js"></script>
     <?php
 }
 ?>

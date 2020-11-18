@@ -22,6 +22,7 @@ if (!empty($_SESSION['user'])) {
         $sumPrice = 0;
         ?>
         <section class="checkout-container" id="checkout">
+            <h2 class="display-none">Checkout</h2>
             <div class="checkout-box">
                 <div>Order summary:</div>
                 <div>

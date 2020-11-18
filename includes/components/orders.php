@@ -23,6 +23,7 @@ if (!empty($_SESSION['user'])) {
     }
     ?>
     <section class="orders-container" id="orders">
+        <h2 class="display-none">Orders</h2>
         <div class="orders-box">
             <div>Active orders:  <?= $orders == null ? "&nbsp;&nbsp;&nbsp;No orders" : ""; ?></div>
             <div class="orders-list">

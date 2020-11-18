@@ -22,10 +22,11 @@ if ($id) {
 if ($hall != null) {
     ?>
     <section class="hall-container" id="hall">
+        <h2 class="display-none">Hall</h2>
         <div class="hall-box">
             <div>
                 <div>
-                    <img src="img/placeholder-image.png" />
+                    <img src="img/placeholder-image.png" alt="<?= $hall->title . " cover image"; ?>" />
                 </div>
             </div>
             <div>
@@ -121,13 +122,13 @@ if ($user != null) {
     if ($user->permission == 0) {
         ?>
         <section class="halls-add" onclick="openDialog();">
-            Edit hall
+            <h3>Edit hall</h3>
         </section>
         <section class="halls-add-dialog-container" id="halls-add-dialog">
             <form action="./actions/editHall.php" method="post">
                 <div class="halls-add-dialog-box">
                     <div onclick="closeDialog();">x</div>
-                    <span>Edit hall</span>
+                    <h3>Edit hall</h3>
                     <br />
                     <input type="text" name="uid" placeholder="Uid" value="<?= $hall->uid; ?>"/>
                     <br />
@@ -145,13 +146,13 @@ if ($user != null) {
     if ($user->permission == 0 || $user->permission == 10) {
         ?>
         <section class="hall-add-seat" onclick="openDialogProgram();">
-            Add seat
+            <h3>Add seat</h3>
         </section>
         <section class="hall-add-seat-dialog-container" id="hall-add-seat-dialog">
             <form action="./actions/addSeat.php" method="post">
                 <div class="hall-add-seat-dialog-box">
                     <div onclick="closeDialogProgram();">x</div>
-                    <span>Add seat</span>
+                    <h3>Add seat</h3>
                     <br />
                     <input type="number" name="posX" placeholder="Pos X">
                     <br />
@@ -165,7 +166,7 @@ if ($user != null) {
                 </div>
             </form>
         </section>
-        <script type="text/javascript" src="js/halls.js"></script>
+        <script src="js/halls.js"></script>
         <?php
     }
 }

@@ -1,9 +1,10 @@
 <?php
 defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
 ?>
+
 <title>Cinematic</title>
 <meta charset="utf-8" />
-<meta name="author" value="Petr Bednář" />
+<meta name="author" content="Petr Bednář" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 

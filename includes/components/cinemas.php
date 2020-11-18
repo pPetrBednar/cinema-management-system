@@ -21,6 +21,7 @@ if (!empty($_SESSION['user'])) {
 }
 ?>
 <section class="cinemas-container" id="cinemas">
+    <h2 class="display-none">Cinemas</h2>
     <?php
     if ($cinemas != null) {
         foreach ($cinemas as $cinema) {
@@ -36,7 +37,7 @@ if (!empty($_SESSION['user'])) {
                     <?php
                 }
                 ?>
-                <img class="gallery-img" src="<?= $cinema->coverUrl == null ? "img/placeholder-image.png" : $cinema->coverUrl; ?>" />
+                <img class="gallery-img" src="<?= $cinema->coverUrl == null ? "img/placeholder-image.png" : $cinema->coverUrl; ?>" alt="<?= $cinema->title . " cover image"; ?>" />
                 <div>
                     <span><?= $cinema->title; ?></span>
                 </div>
@@ -50,13 +51,13 @@ if (!empty($_SESSION['user'])) {
 if ($user != null && $user->permission == 0) {
     ?>
     <section class="cinemas-add" onclick="openDialog();">
-        Add new cinema
+        <h3>Add new cinema</h3>
     </section>
     <section class="cinemas-add-dialog-container" id="cinemas-add-dialog">
         <form action="./actions/addCinema.php" method="post">
             <div class="cinemas-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
-                <span>Add cinema</span>
+                <h3>Add cinema</h3>
                 <br />
                 <input type="text" name="title" placeholder="Title" />
                 <br />
@@ -70,7 +71,7 @@ if ($user != null && $user->permission == 0) {
             </div>
         </form>
     </section>
-    <script type="text/javascript" src="js/cinemas.js"></script>
+    <script src="js/cinemas.js"></script>
     <?php
 }
 ?>

@@ -52,6 +52,7 @@ if ($programEntry != null) {
     if ($hall != null) {
         ?>
         <section class="hall-container" id="reservation">
+            <h2 class="display-none">Reservation</h2>
             <div class="hall-seats">
                 <div><span>Seat reservation:</span><br> Cinema Hall <?= $hall->uid . " (" . $hall->type . ")" ?></div>
                 <div>Screen</div>

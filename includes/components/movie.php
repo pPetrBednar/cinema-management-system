@@ -21,10 +21,11 @@ if ($id) {
 if ($movie != null) {
     ?>
     <section class="movie-container" id="movie">
+        <h2 class="display-none">Movie</h2>
         <div class="movie-box">
             <div>
                 <div>
-                    <img src="<?= $movie->coverUrl == null ? "img/placeholder-image.png" : $movie->coverUrl; ?>" />
+                    <img src="<?= $movie->coverUrl == null ? "img/placeholder-image.png" : $movie->coverUrl; ?>" alt="<?= $movie->title . " cover image"; ?>" />
                 </div>
             </div>
             <div>
@@ -43,13 +44,13 @@ if (!empty($_SESSION['user'])) {
     if ($user->permission == 0) {
         ?>
         <section class="movies-add" onclick="openDialog();">
-            Edit movie
+            <h3>Edit movie</h3>
         </section>
         <section class="movies-add-dialog-container" id="movies-add-dialog">
             <form action="./actions/editMovie.php" method="post">
                 <div class="movies-add-dialog-box">
                     <div onclick="closeDialog();">x</div>
-                    <span>Edit movie</span>
+                    <h3>Edit movie</h3>
                     <br />
                     <input type="text" name="title" placeholder="Title" value="<?= $movie->title; ?>" />
                     <br />
@@ -66,7 +67,7 @@ if (!empty($_SESSION['user'])) {
                 </div>
             </form>
         </section>
-        <script type="text/javascript" src="js/movies.js"></script>
+        <script src="js/movies.js"></script>
         <?php
     }
 }

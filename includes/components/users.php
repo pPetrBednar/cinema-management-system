@@ -13,6 +13,7 @@ if (!empty($_SESSION['user'])) {
     if ($user->permission == 0) {
         ?>
         <section class="users-container" id="users">
+            <h2 class="display-none">Users</h2>
             <table>
                 <tr>
                     <th>Email</th>
@@ -40,31 +41,30 @@ if (!empty($_SESSION['user'])) {
                         $date = DateTime::createFromFormat("Y-m-d H:i:s", $res->registered);
                         ?>
                         <tr>
-                        <form action="./actions/editUser.php" method="post">
                             <td>
-                                <input type="text" name="email" value="<?= $res->email; ?>">
+                                <form id="form-id-<?= $res->id; ?>" action="./actions/editUser.php" method="post"></form>
+                                <input type="text" value="<?= $res->email; ?>" disabled>
                             </td>
                             <td>
-                                <input type="text" name="firstName" value="<?= $res->firstName; ?>">
+                                <input type="text" name="firstName" value="<?= $res->firstName; ?>" form="form-id-<?= $res->id; ?>">
                             </td>
                             <td>
-                                <input type="text" name="lastName" value="<?= $res->lastName; ?>">
+                                <input type="text" name="lastName" value="<?= $res->lastName; ?>" form="form-id-<?= $res->id; ?>">
                             </td>
                             <td>
-                                <input type="text" name="permission" value="<?= $res->permission; ?>">
+                                <input type="text" name="permission" value="<?= $res->permission; ?>" form="form-id-<?= $res->id; ?>">
                             </td>
                             <td><?= $date->format("H:i d. m. Y"); ?></td>
                             <td>
-                                <input type="number" name="id" value="<?= $res->id; ?>" style="display: none;">
-                                <button type="submit">Edit</button>
+                                <input type="number" name="id" value="<?= $res->id; ?>" style="display: none;" form="form-id-<?= $res->id; ?>">
+                                <button type="submit" form="form-id-<?= $res->id; ?>">Edit</button>
                             </td>
-                        </form>
-                        <td>
-                            <form action="./actions/deleteUser.php" method="post">
-                                <input type="number" name="id" value="<?= $res->id; ?>" style="display: none;">
-                                <button type="submit">Delete</button>
-                            </form>
-                        </td>
+                            <td>
+                                <form action="./actions/deleteUser.php" method="post">
+                                    <input type="number" name="id" value="<?= $res->id; ?>" style="display: none;">
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         <?php
                     }
