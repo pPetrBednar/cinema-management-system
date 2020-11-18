@@ -90,7 +90,7 @@ if (!empty($_SESSION['user'])) {
                 </div>
                 <div>
                     <div>
-                        <div>Discard</div>
+                        <div onclick="window.open('./actions/discardOrder.php', '_self')">Discard</div>
                     </div>
                     <div>
                         <div onclick="window.open('./actions/confirmOrder.php', '_self')">Confirm</div>

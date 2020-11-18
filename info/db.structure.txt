@@ -111,5 +111,6 @@ ALTER TABLE `cinema-management-db`.`orders` ADD FOREIGN KEY (`user_id`) REFERENC
 ALTER TABLE `cinema-management-db`.`completed_orders` ADD FOREIGN KEY (`user_id`) REFERENCES `cinema-management-db`.`users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `cinema-management-db`.`confirmed_seats` ADD FOREIGN KEY (`completed_reservation_id`) REFERENCES `cinema-management-db`.`completed_reservations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ALTER TABLE `cinema-management-db`.`confirmed_seats` ADD FOREIGN KEY (`seat_id`) REFERENCES `cinema-management-db`.`seats` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `cinema-management-db`.`halls` ADD FOREIGN KEY (`cinema_id`) REFERENCES `cinema-management-db`.`cinemas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 

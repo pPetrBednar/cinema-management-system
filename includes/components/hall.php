@@ -82,7 +82,7 @@ if ($hall != null) {
                             <?php
                             for ($x = 0; $x < $maxX; $x++) {
                                 if ($arr[$y][$x] != null) {
-                                    if ($user->permission == 0) {
+                                    if ($user != null && $user->permission == 0) {
                                         ?>
                                         <td class="hall-seat-empty">
                                             <form action="./actions/deleteSeat.php" method="post">

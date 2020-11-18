@@ -16,12 +16,10 @@ if (!empty($_SESSION['user'])) {
     include_once 'includes/classes/Hall.php';
 
     $dbm = new DatabaseManager;
+    $reservations = null;
     ?>
     <section id="cart">
         <div class="cart-container">
-            <div class="cart-box" onclick="openCloseCart()">
-                Orders
-            </div>
             <div id="cart-sliding-box">
                 <?php
                 if (isset($_SESSION['reservations'])) {
@@ -65,6 +63,10 @@ if (!empty($_SESSION['user'])) {
                     <?php
                 }
                 ?>
+            </div>
+            <div class="cart-box" onclick="openCloseCart()" onmouseover="openCloseCartHover()" onmouseout="openCloseCartHover()">
+                Cart
+                <?= $reservations != null ? "<div>" . count($reservations) . "</div>" : ""; ?>
             </div>
         </div>
         <script type="text/javascript" src="js/cart.js"></script>

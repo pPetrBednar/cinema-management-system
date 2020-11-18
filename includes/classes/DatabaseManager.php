@@ -344,6 +344,42 @@ final class DatabaseManager extends Database {
         }
     }
 
+    public function deleteCinema($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM cinemas WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteMovie($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM movies WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteHall($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM halls WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteProgramEntry($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM program_entries WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
     public function getSeatsOfHall($id) {
 
         $stmt = $this->connect()->prepare("SELECT * FROM seats WHERE hall_id = ?");

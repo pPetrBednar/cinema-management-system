@@ -20,7 +20,7 @@ include_once 'includes/classes/User.php';
         <?php
         $state = " ";
         $email = filter_input(INPUT_POST, 'email');
-        $password = filter_input(INPUT_POST, 'email');
+        $password = filter_input(INPUT_POST, 'password');
 
         if ($email && $password) {
             $dbm = new DatabaseManager;

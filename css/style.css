@@ -274,6 +274,7 @@ GALLERY
 
 .gallery-item {
     margin: 5px;
+    position: relative;
 
     background-color: rgba(255, 255, 255, 0.1);
     cursor: pointer;
@@ -285,6 +286,25 @@ GALLERY
 
 .gallery-item > img {
     margin: 10px 10px 0px 10px;
+}
+
+.gallery-item button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 17px;
+    color: #f3f3f3;
+    cursor: pointer;
+
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.gallery-item button:hover {
+    background-color: rgba(255, 0, 0, 0.7);
 }
 
 .gallery-item > div {
@@ -610,6 +630,7 @@ MOVIES
 }
 
 .movies-gallery-item {
+    position: relative;
     margin: 5px;
 
     background-color: rgba(255, 255, 255, 0.1);
@@ -624,6 +645,25 @@ MOVIES
     margin: 10px 10px 0px 10px;
     width: calc(108px * 2.5);
     height: calc(192px * 2);
+}
+
+.movies-gallery-item button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 17px;
+    color: #f3f3f3;
+    cursor: pointer;
+
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.movies-gallery-item button:hover {
+    background-color: rgba(255, 0, 0, 0.7);
 }
 
 .movies-gallery-item > div {
@@ -1232,6 +1272,28 @@ CINEMA
     margin: auto;
 }
 
+.cinema-program-delete {
+    width: 30px;
+}
+
+.cinema-program-delete button {
+
+    margin: auto;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 17px;
+    color: #f3f3f3;
+    cursor: pointer;
+
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.cinema-program-delete button:hover {
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
 .cinema-program th {
     background-color: #232323;
 }
@@ -1719,10 +1781,11 @@ CART
 }
 
 .cart-box {
+    position: relative;
     background-color: #24252A;
     cursor: pointer;
     text-align: center;
-    width: 80px;
+    width: 120px;
     height: 40px;
     line-height: 40px;
     box-sizing: border-box;
@@ -1733,11 +1796,24 @@ CART
     background-color: #3a3c4a;
 }
 
+.cart-box > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+
+    background-color: #918323;
+}
+
 #cart-sliding-box {
     display: none;
     position: fixed;
     top: 10px;
-    right: 100px;
+    right: 140px;
     padding: 10px;
     background-color: #24252A;
     box-sizing: border-box;
@@ -1745,7 +1821,6 @@ CART
 }
 
 .cart-item {
-    width: 100%;
     padding: 10px;
     text-align: center;
 }
@@ -1783,6 +1858,14 @@ CART
 
 .cart-controls > div > div:hover {
     background-color: #535566;
+}
+
+.cart-controls > div:nth-child(1) > div {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.cart-controls > div:nth-child(1) > div:hover {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 /*
@@ -1862,6 +1945,14 @@ CHECKOUT
 
 .checkout-box > div:nth-of-type(5) > div > div:hover {
     background-color: #535566;
+}
+
+.checkout-box > div:nth-of-type(5) > div:nth-child(1) > div {
+    background-color: rgba(255, 0, 0, 0.3);
+}
+
+.checkout-box > div:nth-of-type(5) > div:nth-child(1) > div:hover {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 .checkout-box table {
