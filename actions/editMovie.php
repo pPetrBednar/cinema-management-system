@@ -23,7 +23,7 @@ $duration = filter_input(INPUT_POST, 'duration');
 $description = filter_input(INPUT_POST, 'description');
 $coverUrl = filter_input(INPUT_POST, 'coverUrl');
 
-if ($id && $title && $year && $duration && $description && $coverUrl) {
+if ($id && $title && $year && $duration) {
     $dbm = new DatabaseManager;
     try {
         $dbm->editMovie($id, $title, $year, $duration, $description, $coverUrl);

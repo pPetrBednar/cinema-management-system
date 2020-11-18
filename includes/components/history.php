@@ -22,7 +22,8 @@ if (!empty($_SESSION['user'])) {
         $orders = null;
     }
     ?>
-    <div class="orders-container">
+    <section class="orders-container" id="history">
+        <h2 class="display-none">History</h2>
         <div class="orders-box">
             <div>Completed orders:  <?= $orders == null ? "&nbsp;&nbsp;&nbsp;No orders" : ""; ?></div>
             <div class="orders-list">
@@ -101,7 +102,7 @@ if (!empty($_SESSION['user'])) {
                 ?>
             </div>
         </div>
-    </div>
+    </section>
     <?php
 } else {
     header('Location: ./');

@@ -2,10 +2,10 @@
 defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
 $user = unserialize($_SESSION['user']);
 ?>
-<div class="account-container">
+<section class="account-container" id="account">
+    <h2 class="display-none">Account</h2>
     <div class="account-box">
         <form action="./actions/editAccount.php" method="post">
-            <input type="text" name="action" value="editUser" style="display: none;">
             <div class="account-item">
                 <div>Email address:</div>
                 <div><?= $user->email; ?></div>
@@ -43,12 +43,12 @@ $user = unserialize($_SESSION['user']);
             </div>
         </form>
     </div>
-</div>
-<div class="account-change-password-dialog-container" id="account-change-password-dialog">
+</section>
+<section class="account-change-password-dialog-container" id="account-change-password-dialog">
     <form action="./actions/changePassword.php" method="post">
         <div class="account-change-password-dialog-box">
             <div onclick="closeDialog();">x</div>
-            <span>Change password</span>
+            <h3>Change password</h3>
             <br />
             <input type="password" name="password" placeholder="Password">
             <br />
@@ -57,5 +57,5 @@ $user = unserialize($_SESSION['user']);
             <input type="submit" value="Change" />
         </div>
     </form>
-</div>
-<script type="text/javascript" src="js/account.js"></script>
+</section>
+<script src="js/account.js"></script>

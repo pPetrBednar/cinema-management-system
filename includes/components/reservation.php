@@ -51,7 +51,8 @@ if ($programEntryId) {
 if ($programEntry != null) {
     if ($hall != null) {
         ?>
-        <div class="hall-container">
+        <section class="hall-container" id="reservation">
+            <h2 class="display-none">Reservation</h2>
             <div class="hall-seats">
                 <div><span>Seat reservation:</span><br> Cinema Hall <?= $hall->uid . " (" . $hall->type . ")" ?></div>
                 <div>Screen</div>
@@ -168,7 +169,7 @@ if ($programEntry != null) {
                     ?>
                 </table>
             </div>
-        </div>
+        </section>
         <?php
     }
 }

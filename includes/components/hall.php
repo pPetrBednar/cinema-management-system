@@ -21,11 +21,12 @@ if ($id) {
 
 if ($hall != null) {
     ?>
-    <div class="hall-container">
+    <section class="hall-container" id="hall">
+        <h2 class="display-none">Hall</h2>
         <div class="hall-box">
             <div>
                 <div>
-                    <img src="img/placeholder-image.png" />
+                    <img src="img/placeholder-image.png" alt="<?= $hall->title . " cover image"; ?>" />
                 </div>
             </div>
             <div>
@@ -113,21 +114,21 @@ if ($hall != null) {
                 ?>
             </table>
         </div>
-    </div>
+    </section>
     <?php
 }
 
 if ($user != null) {
     if ($user->permission == 0) {
         ?>
-        <div class="halls-add" onclick="openDialog();">
-            Edit hall
-        </div>
-        <div class="halls-add-dialog-container" id="halls-add-dialog">
+        <section class="halls-add" onclick="openDialog();">
+            <h3>Edit hall</h3>
+        </section>
+        <section class="halls-add-dialog-container" id="halls-add-dialog">
             <form action="./actions/editHall.php" method="post">
                 <div class="halls-add-dialog-box">
                     <div onclick="closeDialog();">x</div>
-                    <span>Edit hall</span>
+                    <h3>Edit hall</h3>
                     <br />
                     <input type="text" name="uid" placeholder="Uid" value="<?= $hall->uid; ?>"/>
                     <br />
@@ -138,20 +139,20 @@ if ($user != null) {
                     <input type="submit" value="Edit" />
                 </div>
             </form>
-        </div>
+        </section>
         <?php
     }
 
     if ($user->permission == 0 || $user->permission == 10) {
         ?>
-        <div class="hall-add-seat" onclick="openDialogProgram();">
-            Add seat
-        </div>
-        <div class="hall-add-seat-dialog-container" id="hall-add-seat-dialog">
+        <section class="hall-add-seat" onclick="openDialogProgram();">
+            <h3>Add seat</h3>
+        </section>
+        <section class="hall-add-seat-dialog-container" id="hall-add-seat-dialog">
             <form action="./actions/addSeat.php" method="post">
                 <div class="hall-add-seat-dialog-box">
                     <div onclick="closeDialogProgram();">x</div>
-                    <span>Add seat</span>
+                    <h3>Add seat</h3>
                     <br />
                     <input type="number" name="posX" placeholder="Pos X">
                     <br />
@@ -164,8 +165,8 @@ if ($user != null) {
                     <input type="submit" value="Add" />
                 </div>
             </form>
-        </div>
-        <script type="text/javascript" src="js/halls.js"></script>
+        </section>
+        <script src="js/halls.js"></script>
         <?php
     }
 }

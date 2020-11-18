@@ -1,7 +1,8 @@
 <?php
 defined('LOADER') || die("Ah, i see what you did there. No direct access next time!");
 ?>
-<div class="container-login">
+<section class="container-login" id="login">
+    <h2 class="display-none">Login</h2>
     <form action="<?= $_SERVER['PHP_SELF']; ?>" method="post">
         <div class="box-login">
             <span>Login</span>
@@ -17,4 +18,4 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <input type="submit" value="Login" />
         </div>
     </form>
-</div>
+</section>

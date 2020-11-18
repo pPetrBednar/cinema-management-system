@@ -9,13 +9,11 @@ include_once 'includes/classes/User.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
         <?php
         include 'includes/components/head.php';
         ?>
     </head>
-
     <body>
         <?php
         $state = " ";
@@ -51,5 +49,4 @@ include_once 'includes/classes/User.php';
         }
         ?>
     </body>
-
 </html>

@@ -20,7 +20,8 @@ if (!empty($_SESSION['user'])) {
     $user = null;
 }
 ?>
-<div class="movies-container" id="movies">
+<section class="movies-container" id="movies">
+    <h2 class="display-none">Movies</h2>
     <?php
     if ($movies != null) {
         foreach ($movies as $movie) {
@@ -36,7 +37,7 @@ if (!empty($_SESSION['user'])) {
                     <?php
                 }
                 ?>
-                <img src="<?= $movie->coverUrl == null ? "img/placeholder-image.png" : $movie->coverUrl; ?>" />
+                <img src="<?= $movie->coverUrl == null ? "img/placeholder-image.png" : $movie->coverUrl; ?>" alt="<?= $movie->title . " cover image"; ?>" />
                 <div>
                     <span><?= $movie->title; ?></span>
                     <span><?= $movie->year; ?></span>
@@ -46,18 +47,18 @@ if (!empty($_SESSION['user'])) {
         }
     }
     ?>
-</div>
+</section>
 <?php
 if ($user != null && $user->permission == 0) {
     ?>
-    <div class="movies-add" onclick="openDialog();">
-        Add new movie
-    </div>
-    <div class="movies-add-dialog-container" id="movies-add-dialog">
+    <section class="movies-add" onclick="openDialog();">
+        <h3>Add new movie</h3>
+    </section>
+    <section class="movies-add-dialog-container" id="movies-add-dialog">
         <form action="./actions/addMovie.php" method="post">
             <div class="movies-add-dialog-box">
                 <div onclick="closeDialog();">x</div>
-                <span>Add movie</span>
+                <h3>Add movie</h3>
                 <br />
                 <input type="text" name="title" placeholder="Title" />
                 <br />
@@ -72,8 +73,8 @@ if ($user != null && $user->permission == 0) {
                 <input type="submit" value="Add" />
             </div>
         </form>
-    </div>
-    <script type="text/javascript" src="js/movies.js"></script>
+    </section>
+    <script src="js/movies.js"></script>
     <?php
 }
 ?>
