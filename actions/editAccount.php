@@ -16,7 +16,7 @@ if (!empty($_SESSION['user'])) {
 $firstName = filter_input(INPUT_POST, 'firstName');
 $lastName = filter_input(INPUT_POST, 'lastName');
 
-if ($user && $firstName && $lastName) {
+if ($user) {
     $dbm = new DatabaseManager;
     try {
         $dbm->editAccount($user->id, $firstName, $lastName);

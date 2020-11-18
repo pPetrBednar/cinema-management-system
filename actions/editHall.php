@@ -20,7 +20,7 @@ $id = filter_input(INPUT_POST, 'id');
 $uid = filter_input(INPUT_POST, 'uid');
 $type = filter_input(INPUT_POST, 'type');
 
-if ($id && $uid && $type) {
+if ($id && $uid) {
     $dbm = new DatabaseManager;
     try {
         $dbm->editHall($id, $uid, $type);

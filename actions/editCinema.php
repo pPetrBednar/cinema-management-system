@@ -22,7 +22,7 @@ $city = filter_input(INPUT_POST, 'city');
 $address = filter_input(INPUT_POST, 'address');
 $coverUrl = filter_input(INPUT_POST, 'coverUrl');
 
-if ($id && $title && $city && $address && $coverUrl) {
+if ($id && $title) {
     $dbm = new DatabaseManager;
     try {
         $dbm->editCinema($id, $title, $city, $address, $coverUrl);

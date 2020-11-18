@@ -17,18 +17,13 @@ if (!empty($_SESSION['user'])) {
 }
 
 $id = filter_input(INPUT_POST, 'id');
-$email = filter_input(INPUT_POST, 'email');
 $firstName = filter_input(INPUT_POST, 'firstName');
 $lastName = filter_input(INPUT_POST, 'lastName');
 $permission = filter_input(INPUT_POST, 'permission');
 
-if ($id && $email && $firstName && $lastName && $permission) {
+if ($id && $permission) {
     $dbm = new DatabaseManager;
-    try {
-        $dbm->editUser($id, $email, $firstName, $lastName, $permission);
-    } catch (NO_DATA_ADDED_EXCEPTION $e) {
-        // handle
-    }
+    $dbm->editUser($id, $firstName, $lastName, $permission);
 }
 
 header("Location: ../" . $_SESSION['page'] . ".php");

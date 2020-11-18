@@ -21,7 +21,7 @@ $posY = filter_input(INPUT_POST, 'posY');
 $type = filter_input(INPUT_POST, 'type');
 $hallId = filter_input(INPUT_POST, 'hallId');
 
-if ($posX && $posY && $type && $hallId) {
+if ($posX && $posY && $hallId) {
     $dbm = new DatabaseManager;
     try {
         $dbm->addSeat($posX, $posY, $type, $hallId);
