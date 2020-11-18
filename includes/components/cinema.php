@@ -21,6 +21,12 @@ if ($id) {
     }
 }
 
+if (!empty($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+} else {
+    $user = null;
+}
+
 if ($cinema != null) {
     ?>
     <div class="cinema-container">
@@ -57,6 +63,11 @@ if ($cinema != null) {
                         <th></th>
                         <?php
                     }
+                    if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
+                        ?>
+                        <th></th>
+                        <?php
+                    }
                     ?>
                 </tr>
                 <?php
@@ -85,10 +96,20 @@ if ($cinema != null) {
                                     <?php
                                 }
                             }
-                        }
-                        ?>
-                    </tr>
-                    <?php
+                            if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
+                                ?>
+                                <td class="cinema-program-delete">
+                                    <form action="./actions/deleteProgramEntry.php" method="post">
+                                        <input type="number" name="id" value="<?= $programEntry->id; ?>" style="display: none;">
+                                        <button type="submit">x</button>
+                                    </form>
+                                </td>
+                                <?php
+                            }
+                            ?>     
+                        </tr>    
+                        <?php
+                    }
                 }
                 ?>
             </table>
@@ -97,94 +118,91 @@ if ($cinema != null) {
     <?php
 }
 
-if (!empty($_SESSION['user'])) {
-    $user = unserialize($_SESSION['user']);
-    if ($user->permission == 0) {
-        ?>
-        <div class="cinemas-add" onclick="openDialog();">
-            Edit cinema
-        </div>
-        <div class="cinemas-add-dialog-container" id="cinemas-add-dialog">
-            <form action="./actions/editCinema.php" method="post">
-                <div class="cinemas-add-dialog-box">
-                    <div onclick="closeDialog();">x</div>
-                    <span>Edit cinema</span>
-                    <br />
-                    <input type="text" name="title" placeholder="Title" value="<?= $cinema->title; ?>" />
-                    <br />
-                    <input type="text" name="city" placeholder="City" value="<?= $cinema->city; ?>" />
-                    <br />
-                    <input type="text" name="address" placeholder="Address" value="<?= $cinema->address; ?>" />
-                    <br />
-                    <input type="text" name="coverUrl" placeholder="Cover Url" value="<?= $cinema->coverUrl; ?>"/>
-                    <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
-                    <br />
-                    <input type="submit" value="Edit" />
-                </div>
-            </form>
-        </div>
-        <?php
-    }
+if ($user != null && $user->permission == 0) {
+    ?>
+    <div class="cinemas-add" onclick="openDialog();">
+        Edit cinema
+    </div>
+    <div class="cinemas-add-dialog-container" id="cinemas-add-dialog">
+        <form action="./actions/editCinema.php" method="post">
+            <div class="cinemas-add-dialog-box">
+                <div onclick="closeDialog();">x</div>
+                <span>Edit cinema</span>
+                <br />
+                <input type="text" name="title" placeholder="Title" value="<?= $cinema->title; ?>" />
+                <br />
+                <input type="text" name="city" placeholder="City" value="<?= $cinema->city; ?>" />
+                <br />
+                <input type="text" name="address" placeholder="Address" value="<?= $cinema->address; ?>" />
+                <br />
+                <input type="text" name="coverUrl" placeholder="Cover Url" value="<?= $cinema->coverUrl; ?>"/>
+                <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
+                <br />
+                <input type="submit" value="Edit" />
+            </div>
+        </form>
+    </div>
+    <?php
+}
 
-    if ($user->permission == 0 || $user->permission == 10) {
-        ?>
-        <div class="cinema-add-program" onclick="openDialogProgram();">
-            Add program entry
-        </div>
-        <div class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
-            <form action="./actions/addProgramEntry.php" method="post">
-                <div class="cinema-add-program-dialog-box">
-                    <div onclick="closeDialogProgram();">x</div>
-                    <span>Add program entry</span>
-                    <br />
-                    <input type="datetime-local" name="start">
-                    <br />
-                    <input type="number" name="price" placeholder="Price">
-                    <br />
-                    <select name="movies">
-                        <?php
-                        try {
-                            $movies = $dbm->getAllMovies();
-                        } catch (NO_DATA_FOUND_EXCEPTION $e) {
-                            $movies = null;
-                        }
+if ($user != null && ($user->permission == 0 || $user->permission == 10)) {
+    ?>
+    <div class="cinema-add-program" onclick="openDialogProgram();">
+        Add program entry
+    </div>
+    <div class="cinema-add-program-dialog-container" id="cinema-add-program-dialog">
+        <form action="./actions/addProgramEntry.php" method="post">
+            <div class="cinema-add-program-dialog-box">
+                <div onclick="closeDialogProgram();">x</div>
+                <span>Add program entry</span>
+                <br />
+                <input type="datetime-local" name="start">
+                <br />
+                <input type="number" name="price" placeholder="Price">
+                <br />
+                <select name="movies">
+                    <?php
+                    try {
+                        $movies = $dbm->getAllMovies();
+                    } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                        $movies = null;
+                    }
 
-                        if ($movies != null) {
-                            foreach ($movies as $movie) {
-                                ?>
-                                <option value="<?= $movie->id; ?>"><?= $movie->title . " (" . $movie->year . ")" ?></option>
-                                <?php
-                            }
+                    if ($movies != null) {
+                        foreach ($movies as $movie) {
+                            ?>
+                            <option value="<?= $movie->id; ?>"><?= $movie->title . " (" . $movie->year . ")" ?></option>
+                            <?php
                         }
-                        ?>
-                    </select>
-                    <br />
-                    <select name="halls">
-                        <?php
-                        try {
-                            $halls = $dbm->getHallsOfCinema($cinema->id);
-                        } catch (NO_DATA_FOUND_EXCEPTION $e) {
-                            $halls = null;
-                        }
+                    }
+                    ?>
+                </select>
+                <br />
+                <select name="halls">
+                    <?php
+                    try {
+                        $halls = $dbm->getHallsOfCinema($cinema->id);
+                    } catch (NO_DATA_FOUND_EXCEPTION $e) {
+                        $halls = null;
+                    }
 
-                        if ($halls != null) {
-                            foreach ($halls as $hall) {
-                                ?>
-                                <option value="<?= $hall->id; ?>"><?= $hall->uid . " (" . $hall->type . ")" ?></option>
-                                <?php
-                            }
+                    if ($halls != null) {
+                        foreach ($halls as $hall) {
+                            ?>
+                            <option value="<?= $hall->id; ?>"><?= $hall->uid . " (" . $hall->type . ")" ?></option>
+                            <?php
                         }
-                        ?>
-                    </select>
-                    <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
-                    <br />
-                    <input type="submit" value="Add" />
-                </div>
-            </form>
-        </div>
-        <script type="text/javascript" src="js/cinemas.js"></script>
-        <?php
-    }
+                    }
+                    ?>
+                </select>
+                <input type="text" name="id" style="display: none;" value="<?= $cinema->id; ?>"/>
+                <br />
+                <input type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="js/cinemas.js"></script>
+    <?php
 }
 ?>
 

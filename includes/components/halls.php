@@ -19,6 +19,12 @@ if ($id) {
 } else {
     header("Location: ./");
 }
+
+if (!empty($_SESSION['user'])) {
+    $user = unserialize($_SESSION['user']);
+} else {
+    $user = null;
+}
 ?>
 <div class="halls-container" id="halls">
     <?php
@@ -26,6 +32,16 @@ if ($id) {
         foreach ($halls as $hall) {
             ?>
             <div class="gallery-item" onclick="window.open('hall.php?id=<?= $hall->id; ?>', '_self')">
+                <?php
+                if ($user != null && $user->permission == 0) {
+                    ?>
+                    <form action="./actions/deleteHall.php" method="post">
+                        <input type="number" name="id" value="<?= $hall->id; ?>" style="display: none;">
+                        <button type="submit">x</button>
+                    </form>
+                    <?php
+                }
+                ?>
                 <img class="gallery-img" src="img/placeholder-image.png" />
                 <div>
                     <span><?= $hall->uid; ?></span>
@@ -37,32 +53,29 @@ if ($id) {
     ?>
 </div>
 <?php
-if (!empty($_SESSION['user'])) {
-    $user = unserialize($_SESSION['user']);
-    if ($user->permission == 0) {
-        ?>
-        <div class="halls-add" onclick="openDialog();">
-            Add new hall
-        </div>
-        <div class="halls-add-dialog-container" id="halls-add-dialog">
-            <form action="./actions/addHall.php" method="post">
-                <div class="halls-add-dialog-box">
-                    <div onclick="closeDialog();">x</div>
-                    <span>Add hall</span>
-                    <br />
-                    <input type="text" name="uid" placeholder="Uid" />
-                    <br />
-                    <input type="text" name="type" placeholder="Type" />
-                    <br />
-                    <input type="number" name="cinemaId" value="<?= $id; ?>" style="display: none;" />
-                    <br />
-                    <input type="submit" value="Add" />
-                </div>
-            </form>
-        </div>
-        <script type="text/javascript" src="js/halls.js"></script>
-        <?php
-    }
+if ($user != null && $user->permission == 0) {
+    ?>
+    <div class="halls-add" onclick="openDialog();">
+        Add new hall
+    </div>
+    <div class="halls-add-dialog-container" id="halls-add-dialog">
+        <form action="./actions/addHall.php" method="post">
+            <div class="halls-add-dialog-box">
+                <div onclick="closeDialog();">x</div>
+                <span>Add hall</span>
+                <br />
+                <input type="text" name="uid" placeholder="Uid" />
+                <br />
+                <input type="text" name="type" placeholder="Type" />
+                <br />
+                <input type="number" name="cinemaId" value="<?= $id; ?>" style="display: none;" />
+                <br />
+                <input type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" src="js/halls.js"></script>
+    <?php
 }
 ?>
 

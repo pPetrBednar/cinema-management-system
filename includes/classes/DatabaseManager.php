@@ -140,19 +140,31 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
-    public function editUserAdmin($email, $firstName, $lastName, $permission) {
-        $stmt = $this->connect()->prepare("UPDATE users SET email = ?, first_name = ?, last_name = ?, permission = ? WHERE email = ?");
-        $stmt->execute([$email, $firstName, $lastName, $permission, $email]);
+    public function editUser($id, $email, $firstName, $lastName, $permission) {
+        $stmt = $this->connect()->prepare("UPDATE users SET email = ?, first_name = ?, last_name = ?, permission = ? WHERE id = ?");
+        $stmt->execute([$email, $firstName, $lastName, $permission, $id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
     }
 
-    public function editUser($email, $firstName, $lastName) {
-        $stmt = $this->connect()->prepare("UPDATE users SET first_name = ?, last_name = ? WHERE email = ?");
-        $stmt->execute([$firstName, $lastName, $email]);
+    public function editAccount($id, $firstName, $lastName) {
+        $stmt = $this->connect()->prepare("UPDATE users SET first_name = ?, last_name = ? WHERE id = ?");
+        $stmt->execute([$firstName, $lastName, $id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_ADDED_EXCEPTION;
+        }
     }
 
-    public function deleteUser($email) {
-        $stmt = $this->connect()->prepare("DELETE FROM users WHERE email=?");
-        $stmt->execute([$email]);
+    public function deleteUser($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
     }
 
     public function getAllMovies() {
@@ -325,6 +337,42 @@ final class DatabaseManager extends Database {
 
     public function deleteSeat($id) {
         $stmt = $this->connect()->prepare("DELETE FROM seats WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteCinema($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM cinemas WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteMovie($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM movies WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteHall($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM halls WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if (!$stmt->rowCount()) {
+            throw new NO_DATA_DELETED_EXCEPTION;
+        }
+    }
+
+    public function deleteProgramEntry($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM program_entries WHERE id = ?");
         $stmt->execute([$id]);
 
         if (!$stmt->rowCount()) {

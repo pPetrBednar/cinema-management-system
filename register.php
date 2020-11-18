@@ -19,11 +19,15 @@ include_once 'includes/classes/User.php';
     <body>
         <?php
         $state = " ";
-        if (filter_input(INPUT_POST, 'email') && filter_input(INPUT_POST, 'password') && filter_input(INPUT_POST, 'passwordAgain')) {
+        $email = filter_input(INPUT_POST, 'email');
+        $password = filter_input(INPUT_POST, 'password');
+        $passwordAgain = filter_input(INPUT_POST, 'passwordAgain');
+
+        if ($email && $password && $passwordAgain) {
             $dbm = new DatabaseManager;
 
             try {
-                $dbm->register(filter_input(INPUT_POST, 'email'), filter_input(INPUT_POST, 'password'), filter_input(INPUT_POST, 'passwordAgain'));
+                $dbm->register($email, $password, $passwordAgain);
                 header("Location: ./");
             } catch (PASSWORDS_MISMATCH_EXCEPTION $e) {
                 $state = $e->getMessage();

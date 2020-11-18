@@ -19,11 +19,14 @@ include_once 'includes/classes/User.php';
     <body>
         <?php
         $state = " ";
-        if (filter_input(INPUT_POST, 'email') && filter_input(INPUT_POST, 'password')) {
+        $email = filter_input(INPUT_POST, 'email');
+        $password = filter_input(INPUT_POST, 'password');
+
+        if ($email && $password) {
             $dbm = new DatabaseManager;
 
             try {
-                $dbm->login(filter_input(INPUT_POST, 'email'), filter_input(INPUT_POST, 'password'));
+                $dbm->login($email, $password);
                 header("Location: ./");
             } catch (USER_NOT_FOUND_EXCEPTION $e) {
                 $state = $e->getMessage();
