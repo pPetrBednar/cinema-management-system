@@ -140,22 +140,14 @@ final class DatabaseManager extends Database {
         throw new NO_DATA_FOUND_EXCEPTION;
     }
 
-    public function editUser($id, $email, $firstName, $lastName, $permission) {
-        $stmt = $this->connect()->prepare("UPDATE users SET email = ?, first_name = ?, last_name = ?, permission = ? WHERE id = ?");
-        $stmt->execute([$email, $firstName, $lastName, $permission, $id]);
-
-        if (!$stmt->rowCount()) {
-            throw new NO_DATA_ADDED_EXCEPTION;
-        }
+    public function editUser($id, $firstName, $lastName, $permission) {
+        $stmt = $this->connect()->prepare("UPDATE users SET first_name = ?, last_name = ?, permission = ? WHERE id = ?");
+        $stmt->execute([$firstName, $lastName, $permission, $id]);
     }
 
     public function editAccount($id, $firstName, $lastName) {
         $stmt = $this->connect()->prepare("UPDATE users SET first_name = ?, last_name = ? WHERE id = ?");
         $stmt->execute([$firstName, $lastName, $id]);
-
-        if (!$stmt->rowCount()) {
-            throw new NO_DATA_ADDED_EXCEPTION;
-        }
     }
 
     public function deleteUser($id) {
