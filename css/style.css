@@ -2137,6 +2137,80 @@ RESERVATIONS
 
 */
 
+/*
+
+USERS
+
+*/
+
+.users-container {
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+
+    width: calc(100% - 200px);
+    height: 100%;
+
+    margin-left: 200px;
+}
+
+.users-container table {
+    margin: 30px auto 30px auto;
+}
+
+.users-container input,
+.users-container button {
+    padding: 2px 4px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0);
+    color: #f3f3f3;
+    width: 90%;
+}
+
+.users-container button:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media only screen and (max-width: 700px) {
+    .users-container {
+        width: 100%;
+        margin-left: 0px;
+    }
+}
+
+.users-container table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+.users-container th {
+    background-color: #24252A;
+}
+
+.users-container td,
+.users-container th {
+    border: 1px solid #000000;
+    text-align: left;
+    padding: 8px;
+}
+
+.users-container tr:nth-child(even) {
+    background-color: #3a3c4a;
+}
+
+.users-container tr:nth-child(odd) {
+    background-color: #535566;
+}
+
+/*
+
+/USERS
+
+*/
+
 .container-preview {
     padding: 0;
     margin: 0;

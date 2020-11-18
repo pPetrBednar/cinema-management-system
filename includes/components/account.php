@@ -4,7 +4,7 @@ $user = unserialize($_SESSION['user']);
 ?>
 <div class="account-container">
     <div class="account-box">
-        <form action="edit.admin.php" method="post">
+        <form action="./actions/editAccount.php" method="post">
             <input type="text" name="action" value="editUser" style="display: none;">
             <div class="account-item">
                 <div>Email address:</div>

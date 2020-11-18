@@ -20,7 +20,7 @@ defined('LOADER') || die("Ah, i see what you did there. No direct access next ti
             <div class="menu-header">
                 Administration
             </div>
-            <div class="menu-item" onclick="window.open('users.admin.php', '_self')">
+            <div class="menu-item" onclick="window.open('users.php', '_self')">
                 Users
             </div>
             <div class="menu-item" onclick="window.open('movies.php', '_self')">
