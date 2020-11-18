@@ -15,6 +15,31 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 20px;
+}
+
+h3 {
+    font-size: 17px;
+}
+
+h4 {
+    font-size: 15px;
+}
+
+.display-none {
+    display: none;
+}
+
 #overlay {
     display: none;
     position: fixed;
@@ -87,10 +112,13 @@ MENU
     margin-bottom: 20px;
 
     border-bottom: 3px solid rgba(255, 255, 255, 0.05);
-    font-weight: bold;
-    font-size: 24px;
     color: #f3f3f3;
     cursor: pointer;
+}
+
+.menu-title h1 {
+    font-weight: bold;
+    font-size: 24px;
 }
 
 .menu-title:hover {
@@ -120,12 +148,7 @@ MENU
     width: 120px;
 }
 
-.menu-item-account:hover > div:nth-child(2) {
-    display: block;
-}
-
 .menu-item-logout {
-    display: none;
     position: relative;
     right: 0;
     top: 0;
@@ -144,6 +167,10 @@ MENU
 
 .menu-item-logout:hover {
     background-color: rgba(255, 0, 0, 0.3);
+}
+
+.menu-item-selected {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 @media only screen and (max-width: 700px) {
