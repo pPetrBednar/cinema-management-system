@@ -1565,6 +1565,7 @@ HALL
 }
 
 .hall-seats {
+    margin-bottom: 100px;
     width: 90%;
 }
 
@@ -1682,6 +1683,36 @@ HALL
     background-color: #ad2626;
 }
 
+.hall-import {
+    position: fixed;
+    right: 30px;
+    bottom: 210px;
+
+    padding: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #24252A;
+}
+
+.hall-import:hover {
+    background-color: #3a3c4a;
+}
+
+.hall-export {
+    position: fixed;
+    right: 30px;
+    bottom: 150px;
+
+    padding: 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #24252A;
+}
+
+.hall-export:hover {
+    background-color: #3a3c4a;
+}
+
 .hall-add-seat {
     position: fixed;
     right: 30px;
@@ -1698,6 +1729,10 @@ HALL
 }
 
 #hall-add-seat-dialog {
+    display: none;
+}
+
+#hall-import-dialog {
     display: none;
 }
 
