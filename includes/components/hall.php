@@ -121,6 +121,24 @@ if ($hall != null) {
 if ($user != null) {
     if ($user->permission == 0) {
         ?>
+        <section class="hall-import" onclick="openDialogImport();">
+            <h3>Import seats</h3>
+        </section>
+        <section class="halls-add-dialog-container" id="hall-import-dialog">
+            <form action="./actions/import.php" method="post" enctype="multipart/form-data">
+                <div class="halls-add-dialog-box">
+                    <div onclick="closeDialogImport();">x</div>
+                    <h3>Edit hall</h3>
+                    <br />
+                    <input type="file" name="file">
+                    <br />
+                    <input type="submit" value="Import" />
+                </div>
+            </form>
+        </section>
+        <section class="hall-export" onclick="exportHall();">
+            <h3>Export seats</h3>
+        </section>
         <section class="halls-add" onclick="openDialog();">
             <h3>Edit hall</h3>
         </section>
