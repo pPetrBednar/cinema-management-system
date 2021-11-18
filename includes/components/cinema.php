@@ -58,6 +58,9 @@ if ($cinema != null) {
                     <th>
                         Movie
                     </th>
+                    <th>
+                        Cost
+                    </th>
                     <?php
                     for ($i = 0; $i < 24; $i++) {
                         ?>
@@ -85,6 +88,7 @@ if ($cinema != null) {
                         <tr onclick="window.open('reservation.php?programEntry=<?= $programEntry->id; ?>', '_self')">
                             <td><?= $date->format("d. m. Y"); ?></td>
                             <td><?= $programEntry->movie->title; ?></td>
+                            <td><?= $programEntry->price; ?> kč</td>
                             <?php
                             for ($i = 0; $i < 24; $i++) {
                                 if ($date->format('H') == $i) {
